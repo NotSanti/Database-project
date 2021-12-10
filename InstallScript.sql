@@ -1,15 +1,3 @@
-DROP TABLE Components;
-DROP TABLE Distribution;
-DROP TABLE RolesConSong;
-DROP TABLE AuditLog;
-DROP TABLE RecordLabel;
-DROP TABLE Markets;
-DROP TABLE Contributors;
-DROP TABLE Song;
-DROP TABLE Roles;
-
--- All time aspects will be in seconds --
-
 CREATE TABLE Roles (
     roleId VARCHAR2(20) PRIMARY KEY,
     roleName VARCHAR2(40)
@@ -33,7 +21,7 @@ CREATE TABLE Markets (
 
 CREATE TABLE RecordLabel (
     recordLabelId VARCHAR2(20) PRIMARY KEY,
-    name VARCHAR2(20)
+    name VARCHAR2(25)
 );
 
 CREATE TABLE AuditLog (
@@ -58,10 +46,11 @@ CREATE TABLE Components (
     songId VARCHAR(20),
     offsetComponent NUMBER(10),
     durationComponent NUMBER(10),
-    component# VARCHAR2(20),
+    songUsed VARCHAR2(20),
     offsetSong NUMBER(10),
     durationSong NUMBER(10),
-    FOREIGN KEY (songId) REFERENCES Song(songId)
+    FOREIGN KEY (songId) REFERENCES Song(songId),
+    FOREIGN KEY (songUsed) REFERENCES Song(songId)
 );
 
 CREATE TABLE Distribution (
@@ -74,6 +63,7 @@ CREATE TABLE Distribution (
     FOREIGN KEY (recordLabelId) REFERENCES RecordLabel(recordLabelId),
     FOREIGN KEY (marketId) REFERENCES Markets(marketId)
 );
+
 
 INSERT INTO Roles (roleId, roleName) VALUES('RO0001','acousticGuitar');
 INSERT INTO Roles (roleId, roleName) VALUES('RO0002','additionalEngineer');
@@ -282,8 +272,8 @@ INSERT INTO Contributors (contributorId, fullName) VALUES('CO0114','Cory Bice');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0115','Curtis Peoples');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0116','Cuscuna');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0117','Cyndi Lauper');
-INSERT INTO Contributors (contributorId, fullName) VALUES('CO0118','D'Mile');
-INSERT INTO Contributors (contributorId, fullName) VALUES('CO0119','D.M.C.');
+INSERT INTO Contributors (contributorId, fullName) VALUES('CO0118','DMile');
+INSERT INTO Contributors (contributorId, fullName) VALUES('CO0119','DMC');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0120','DJ Frank E');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0121','Dabbaghian');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0122','Dagenais');
@@ -328,7 +318,7 @@ INSERT INTO Contributors (contributorId, fullName) VALUES('CO0160','Doug McKean'
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0161','Doug Sax');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0162','Dr. Dre');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0163','Dr. Luke');
-INSERT INTO Contributors (contributorId, fullName) VALUES('CO0164','Dr.Dre');
+INSERT INTO Contributors (contributorId, fullName) VALUES('CO0164','DrDre');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0165','Drake');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0166','Drew Brown');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0167','Ed Sheeran');
@@ -353,7 +343,7 @@ INSERT INTO Contributors (contributorId, fullName) VALUES('CO0185','Evan Smith')
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0186','Ex Reyes');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0187','Fergie Fredriksen');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0188','Fernandez Cortez');
-INSERT INTO Contributors (contributorId, fullName) VALUES('CO0189','Filip Gežin');
+INSERT INTO Contributors (contributorId, fullName) VALUES('CO0189','Filip Geï¿½in');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0190','Flood');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0191','Fouert');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0192','Francois Kevorkian');
@@ -444,7 +434,7 @@ INSERT INTO Contributors (contributorId, fullName) VALUES('CO0276','Jay Newland'
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0277','Jeff Bhasker');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0278','Jeff Ellis');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0279','Jeff Porcaro');
-INSERT INTO Contributors (contributorId, fullName) VALUES('CO0280','Jenny O'Grady');
+INSERT INTO Contributors (contributorId, fullName) VALUES('CO0280','Jenny OGrady');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0281','Jeremiah Fraites');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0282','Jeremie Inhaber');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0283','Jeremy Lertola');
@@ -472,7 +462,7 @@ INSERT INTO Contributors (contributorId, fullName) VALUES('CO0304','John Dolmaya
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0305','John Goodmanson');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0306','John Hanes');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0307','John Lennon');
-INSERT INTO Contributors (contributorId, fullName) VALUES('CO0308','John Levén');
+INSERT INTO Contributors (contributorId, fullName) VALUES('CO0308','John Levï¿½n');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0309','John Norum');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0310','John Paul Jones');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0311','John Paul jones');
@@ -526,7 +516,7 @@ INSERT INTO Contributors (contributorId, fullName) VALUES('CO0358','Lee Sun Kyou
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0359','Lee Taewook');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0360','Lelichev');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0361','Lennie Petze');
-INSERT INTO Contributors (contributorId, fullName) VALUES('CO0362','Lennon–McCartney');
+INSERT INTO Contributors (contributorId, fullName) VALUES('CO0362','Lennonï¿½McCartney');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0363','Lenny Zakatek');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0364','Leo Taylor');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0365','Leslie Ann Jones');
@@ -564,7 +554,7 @@ INSERT INTO Contributors (contributorId, fullName) VALUES('CO0396','Marshall Mat
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0397','Marshment');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0398','Martin Gore');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0399','Martin L. Gore');
-INSERT INTO Contributors (contributorId, fullName) VALUES('CO0400','"Masterdisk',' New York',' NY"');
+INSERT INTO Contributors (contributorId, fullName) VALUES('CO0400','Masterdisk');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0401','Mat Sinner');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0402','Matt Billingslea');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0403','Matt Flynn');
@@ -615,12 +605,12 @@ INSERT INTO Contributors (contributorId, fullName) VALUES('CO0447','Nate Hertwec
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0448','Needlz');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0449','Neil Campesinos!');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0450','Neil Jason');
-INSERT INTO Contributors (contributorId, fullName) VALUES('CO0451','"New York City',' New York"');
+INSERT INTO Contributors (contributorId, fullName) VALUES('CO0451','New York City');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0452','Neyla Pekarek');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0453','Nicholas Vegas');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0454','Nick Bockrath');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0455','Nick Movshon');
-INSERT INTO Contributors (contributorId, fullName) VALUES('CO0456','Nick O'Malley');
+INSERT INTO Contributors (contributorId, fullName) VALUES('CO0456','Nick OMalley');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0457','Nikolaj Torp Larsen');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0458','Noah Passovoy');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0459','Noah40Shebib');
@@ -631,7 +621,7 @@ INSERT INTO Contributors (contributorId, fullName) VALUES('CO0463','Norah Jones'
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0464','Norman Smith');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0465','Obadia');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0466','Ollie Campesinos!');
-INSERT INTO Contributors (contributorId, fullName) VALUES('CO0467','Om'Mas Keith');
+INSERT INTO Contributors (contributorId, fullName) VALUES('CO0467','OmMas Keith');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0468','OneRepublic');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0469','Onipchenko');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0470','Orfanidis');
@@ -715,7 +705,7 @@ INSERT INTO Contributors (contributorId, fullName) VALUES('CO0547','Scott Yarmov
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0548','Sean Hutchinson');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0549','Sean Kinney');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0550','Sean Klein');
-INSERT INTO Contributors (contributorId, fullName) VALUES('CO0551','Sebastian Akchoté');
+INSERT INTO Contributors (contributorId, fullName) VALUES('CO0551','Sebastian Akchotï¿½');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0552','Serban Ghenea');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0553','Serben Ghenea');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0554','Serj Tankian');
@@ -731,7 +721,7 @@ INSERT INTO Contributors (contributorId, fullName) VALUES('CO0563','Simone Felic
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0564','Sivakolunthu');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0565','Smith Carlson');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0566','Sologub');
-INSERT INTO Contributors (contributorId, fullName) VALUES('CO0567','"Sony Music Studios',' NYC"');
+INSERT INTO Contributors (contributorId, fullName) VALUES('CO0567','Sony Music Studios');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0568','Sound Track Recording');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0569','Stargate');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0570','Stepehn Marcussen');
@@ -759,7 +749,7 @@ INSERT INTO Contributors (contributorId, fullName) VALUES('CO0591','Ted Poley');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0592','Tess Varley');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0593','The 45 King');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0594','The Influence');
-INSERT INTO Contributors (contributorId, fullName) VALUES('CO0595','"The Record Plant',' Hollywood',' CA"');
+INSERT INTO Contributors (contributorId, fullName) VALUES('CO0595','The Record Plant');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0596','The Smeezingtons');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0597','The Weeknd');
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0598','Thomas Bowes');
@@ -810,65 +800,64 @@ INSERT INTO Contributors (contributorId, fullName) VALUES('CO0642','Zach Filkins
 INSERT INTO Contributors (contributorId, fullName) VALUES('CO0643','Zensei');
 
 
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10000','2008-01-08',258);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10001','2016-12-31',203);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10002','1995-10-27',308);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10003','1990-05-06',296);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10004','2009-06-31',156);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10005','2012-09-31',286);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10006','2000-04-12',404);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10007','2012-04-01',190);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10008','2012-12-12',241);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10009','2018-08-08',314);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10010','2001-08-21',141);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10011','2021-07-17',613);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10012','1985-02-14',309);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10013','2012-08-31',259);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10014','1965-06-17',123);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10015','2014-07-31',235);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10016','1987-10-31',355);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10017','2019-06-14',242);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10018','1986-01-01',183);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10019','2021-09-17',220);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10020','2017-08-01',263);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10021','2014-08-11',244);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10022','1976-12-31',203);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10023','1999-01-01',201);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10024','2019-01-01',231);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10025','2007-06-16',175);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10026','2021-02-25',126);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10027','2000-03-01',284);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10028','2014-05-31',440);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10029','2020-10-31',216);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10030','2017-06-07',259);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10031','2017-09-20',198);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10032','2001-12-01',186);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10033','1970-11-05',482);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10034','2015-12-31',160);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10035','2007-08-01',196);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10036','1999-00-00',571);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10037','1989-12-01',152);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10038','2012-06-10',236);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10039','2009-01-01',200);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10040','1999-05-03',201);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10041','2014-01-23',231);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10042','2015-10-28',248);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10043','2012-01-31',232);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10044','1974-08-31',180);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10045','1983-06-31',241);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10046','2013-05-22',273);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10047','2014-02-01',281);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10048','2008-12-31',241);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10049','2019-08-26',255);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10050','2010-07-22',217);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10051','1999-05-01',257);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10052','2010-05-20',221);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10053','2018-08-31',201);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10054','1982-12-31',244);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10055','2011-12-31',205);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10056','2001-03-10',210);
-INSERT INTO Song (songId, releaseDate, duration) VALUES('S10057','2019-03-15',252);
-
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10000', DATE '2008-01-08',258);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10001', DATE '2016-12-31',203);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10002', DATE '1995-10-27',308);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10003', DATE '1990-05-06',296);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10004', DATE '2009-06-30',156);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10005', DATE '2012-09-30',286);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10006', DATE '2000-04-12',404);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10007', DATE '2012-04-01',190);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10008', DATE '2012-12-12',241);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10009', DATE '2018-08-08',314);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10010', DATE '2001-08-21',141);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10011', DATE '2021-07-17',613);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10012', DATE '1985-02-14',309);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10013', DATE '2012-08-30',259);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10014', DATE '1965-06-17',123);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10015', DATE '2014-07-31',235);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10016', DATE '1987-10-31',355);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10017', DATE '2019-06-14',242);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10018', DATE '1986-01-01',183);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10019', DATE '2021-09-17',220);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10020', DATE '2017-08-01',263);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10021', DATE '2014-08-11',244);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10022', DATE '1976-12-31',203);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10023', DATE '1999-01-01',201);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10024', DATE '2019-01-01',231);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10025', DATE '2007-06-16',175);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10026', DATE '2021-02-25',126);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10027', DATE '2000-03-01',284);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10028', DATE '2014-05-31',440);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10029', DATE '2020-10-31',216);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10030', DATE '2017-06-07',259);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10031', DATE '2017-09-20',198);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10032', DATE '2001-12-01',186);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10033', DATE '1970-11-05',482);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10034', DATE '2015-12-31',160);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10035', DATE '2007-08-01',196);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10036', DATE '1999-01-01',571);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10037', DATE '1989-12-01',152);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10038', DATE '2012-06-10',236);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10039', DATE '2009-01-01',200);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10040', DATE '1999-05-03',201);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10041', DATE '2014-01-23',231);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10042', DATE '2015-10-28',248);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10043', DATE '2012-01-31',232);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10044', DATE '1974-08-31',180);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10045', DATE '1983-06-30',241);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10046', DATE '2013-05-22',273);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10047', DATE '2014-02-01',281);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10048', DATE '2008-12-31',241);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10049', DATE '2019-08-26',255);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10050', DATE '2010-07-22',217);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10051', DATE '1999-05-01',257);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10052', DATE '2010-05-20',221);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10053', DATE '2018-08-31',201);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10054', DATE '1982-12-31',244);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10055', DATE '2011-12-31',205);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10056', DATE '2001-03-10',210);
+INSERT INTO Song (songId, releaseDate, duration) VALUES('S10057', DATE '2019-03-15',252);
 
 INSERT INTO RolesConSong (songId, contributorId, roleId) VALUES ('S10000','CO0576','RO0013');
 INSERT INTO RolesConSong (songId, contributorId, roleId) VALUES ('S10000','CO0061','RO0044');
@@ -2108,20 +2097,28 @@ INSERT INTO RolesConSong (songId, contributorId, roleId) VALUES ('S10057','CO063
 INSERT INTO RolesConSong (songId, contributorId, roleId) VALUES ('S10057','CO0627','RO0023');
 
 
-INSERT INTO Market (marketId, area) VALUES ('M0001','Global');
-INSERT INTO Market (marketId, area) VALUES ('M0002','Japan');
-INSERT INTO Market (marketId, area) VALUES ('M0003','United Kingdom');
-INSERT INTO Market (marketId, area) VALUES ('M0004','United States');
+INSERT INTO Components (componentId, songId, offsetComponent, durationComponent, songUsed, offsetSong, durationSong) VALUES('COM0001','S10000',0,29,'S10001',10,29);
+INSERT INTO Components (componentId, songId, offsetComponent, durationComponent, songUsed, offsetSong, durationSong) VALUES('COM0002','S10000',20,98,'S10002',40,98);
+INSERT INTO Components (componentId, songId, offsetComponent, durationComponent, songUsed, offsetSong, durationSong) VALUES('COM0003','S10000',139,10,'S10003',140,10);
+INSERT INTO Components (componentId, songId, offsetComponent, durationComponent, songUsed, offsetSong, durationSong) VALUES('COM0004','S10003',0,40,'S10005',20,40);
+INSERT INTO Components (componentId, songId, offsetComponent, durationComponent, songUsed, offsetSong, durationSong) VALUES('COM0005','S10003',58,120,'S10002',40,120);
+INSERT INTO Components (componentId, songId, offsetComponent, durationComponent, songUsed, offsetSong, durationSong) VALUES('COM0006','S10010',0,29,'S10009',220,29);
+
+
+INSERT INTO Markets (marketId, area) VALUES ('M0001','Global');
+INSERT INTO Markets (marketId, area) VALUES ('M0002','Japan');
+INSERT INTO Markets (marketId, area) VALUES ('M0003','United Kingdom');
+INSERT INTO Markets (marketId, area) VALUES ('M0004','United States');
 
 
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0001','222 Records');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0002','Aftermath');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0003','American Recordings');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0004','Arista');
-INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0005','Arts & Crafts');
+INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0005','Arts and Crafts');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0006','Asylum');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0007','Atlantic');
-INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0008','BOYS DON'T CRY');
+INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0008','BOYS DONT CRY');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0009','Big Machine');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0010','BigHit Entertainment');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0011','Blue Note');
@@ -2129,7 +2126,7 @@ INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0012','Capitol');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0013','Columbia');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0014','Crown Record');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0015','Death Row Records');
-INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0016','Distinct'ive Breaks');
+INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0016','Distinctive Breaks');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0017','Domino');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0018','Dualtone Records');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0019','EMI');
@@ -2157,63 +2154,63 @@ INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0040','Young Money');
 INSERT INTO RecordLabel (recordLabelId, name) VALUES ('RL0041','ZTM Collections');
 
 
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10000','RL0021','M0001','2008-02-08','Beatit');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10001','RL0025','M0001','2017-02-01','Believer');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10002','RL0015','M0001','1996-02-13','AllEyezOnMe');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10003','RL0029','M0001','1990-05-07','PolicyofTruth');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10004','RL0005','M0001','2010-01-26','RomanceIsBoring');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10005','RL0038','M0001','2012-10-05','Skyfall');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10006','RL0002','M0001','2000-11-20','Stan');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10007','RL0025','M0001','2012-10-29','Radioactive');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10008','RL0028','M0001','2013-01-08','IfILoseMyself');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10009','RL0033','M0001','2019-08-30','Circles');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10010','RL0027','M0001','2001-08-22','EscapefromtheCity');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10011','RL0033','M0001','2021-10-12','AllTooWell(10MinuteVersion)(TaylorsVersion)[FromTheVault]');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10012','RL0021','M0001','1986-02-14','TheFinalCountdown');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10013','RL0028','M0001','2013-06-14','CountingStars');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10014','RL0012','M0001','1965-08-06','Yesterday');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10015','RL0001','M0001','2014-01-13','Sugar');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10016','RL0019','M0003','1975-10-31','BohemianRhapsody');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10017','RL0002','M0001','2020-03-05','LeavetheDoorOpen');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10018','RL0031','M0001','1987-02-08','');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10019','RL0007','M0001','2015-08-31','WildestDreams');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10020','RL0006','M0001','2017-09-26','Perfect');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10021','RL0014','M0002','2014-08-12','Thrill');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10021','RL0014','M0004','2014-08-12','Thrill');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10022','RL0004','M0001','1977-08-01','IWouldntWanttoBeLikeYou');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10023','RL0025','M0001','1999-05-04','AllStar');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10024','RL0034','M0001','2019-10-15','TakeWhatYouWant');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10025','RL0032','M0001','2008-06-16','AintNoRestForTheWicked');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10026','RL0041','M0001','2021-05-09','FindYou');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10027','RL0002','M0001','2000-04-18','TheRealSlimShady');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10028','RL0026','M0001','2015-03-10','Seeyouagain');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10029','RL0039','M0001','2020-12-04','BlindingLights');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10030','RL0028','M0001','2017-07-12','LetMeGo');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10031','RL0040','M0001','2018-12-19','GodsPlan');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10032','RL0011','M0001','2002-01-28','Dontknowwhy');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10033','RL0007','M0001','1971-11-08','StairwayToHeaven');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10034','RL0018','M0001','2016-02-05','Ophelia');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10035','RL0035','M0001','2007-09-11','');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10036','RL0016','M0001','1999-06-28','FinishedSymphony');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10037','RL0013','M0001','1990-08-21','WeDieYoung');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10038','RL0022','M0001','2012-07-17','KingforaDay');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10039','RL0030','M0001','2010-03-03','RhinestoneEyes');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10040','RL0025','M0001','1999-05-04','AllStar');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10041','RL0001','M0001','2014-08-25','Animals');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10042','RL0011','M0001','2016-08-20','WhiteFerrari');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10043','RL0007','M0001','2012-08-01','LockedOutOfHeaven');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10044','RL0019','M0003','1974-10-11','KillerQueen');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10044','RL0019','M0004','1974-10-11','KillerQueen');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10045','RL0021','M0001','1984-01-27','CountingStars');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10046','RL0017','M0001','2013-06-19','DoIWannaKnow');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10047','RL0006','M0001','2014-09-24','ThinkingOutLoud');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10048','RL0007','M0001','20010-1-04','Fearless');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10049','RL0023','M0001','2020-07-10','BloodOnMyJeans');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10050','RL0036','M0001','2010-09-14','BlackandYellow');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10051','RL0037','M0001','1999-06-15','YoullBeinMyHeart');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10052','RL0018','M0001','2010-07-20','JusttheWayYouAre');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10053','RL0039','M0001','2019-11-29','BlindingLights');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10054','RL0019','M0001','1982-02-31','EyeoftheTiger');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10055','RL0024','M0001','2012-01-23','GiveYourHeartaBreak');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10056','RL0003','M0001','2001-08-13','ChopSuey!');
-INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10057','RL0010','M0001','2019-04-12','BoyWithLuv');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10000','RL0021','M0001', DATE '2008-02-08','Beatit');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10001','RL0025','M0001', DATE '2017-02-01','Believer');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10002','RL0015','M0001', DATE '1996-02-13','AllEyezOnMe');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10003','RL0029','M0001', DATE '1990-05-07','PolicyofTruth');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10004','RL0005','M0001', DATE '2010-01-26','RomanceIsBoring');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10005','RL0038','M0001', DATE '2012-10-05','Skyfall');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10006','RL0002','M0001', DATE '2000-11-20','Stan');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10007','RL0025','M0001', DATE '2012-10-29','Radioactive');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10008','RL0028','M0001', DATE '2013-01-08','IfILoseMyself');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10009','RL0033','M0001', DATE '2019-08-30','Circles');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10010','RL0027','M0001', DATE '2001-08-22','EscapefromtheCity');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10011','RL0033','M0001', DATE '2021-10-12','AllTooWell');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10012','RL0021','M0001', DATE '1986-02-14','TheFinalCountdown');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10013','RL0028','M0001', DATE '2013-06-14','CountingStars');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10014','RL0012','M0001', DATE '1965-08-06','Yesterday');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10015','RL0001','M0001', DATE '2014-01-13','Sugar');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10016','RL0019','M0003', DATE '1975-10-31','BohemianRhapsody');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10017','RL0002','M0001', DATE '2020-03-05','LeavetheDoorOpen');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10018','RL0031','M0001', DATE '1987-02-08','');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10019','RL0007','M0001', DATE '2015-08-30','WildestDreams');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10020','RL0006','M0001', DATE '2017-09-26','Perfect');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10021','RL0014','M0002', DATE '2014-08-12','Thrill');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10021','RL0014','M0004', DATE '2014-08-12','Thrill');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10022','RL0004','M0001', DATE '1977-08-01','IWouldntWanttoBeLikeYou');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10023','RL0025','M0001', DATE '1999-05-04','AllStar');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10024','RL0034','M0001', DATE '2019-10-15','TakeWhatYouWant');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10025','RL0032','M0001', DATE '2008-06-16','AintNoRestForTheWicked');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10026','RL0041','M0001', DATE '2021-05-09','FindYou');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10027','RL0002','M0001', DATE '2000-04-18','TheRealSlimShady');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10028','RL0026','M0001', DATE '2015-03-10','Seeyouagain');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10029','RL0039','M0001', DATE '2020-12-04','BlindingLights');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10030','RL0028','M0001', DATE '2017-07-12','LetMeGo');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10031','RL0040','M0001', DATE '2018-12-19','GodsPlan');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10032','RL0011','M0001', DATE '2002-01-28','Dontknowwhy');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10033','RL0007','M0001', DATE '1971-11-08','StairwayToHeaven');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10034','RL0018','M0001', DATE '2016-02-05','Ophelia');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10035','RL0035','M0001', DATE '2007-09-11','');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10036','RL0016','M0001', DATE '1999-06-28','FinishedSymphony');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10037','RL0013','M0001', DATE '1990-08-21','WeDieYoung');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10038','RL0022','M0001', DATE '2012-07-17','KingforaDay');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10039','RL0030','M0001', DATE '2010-03-03','RhinestoneEyes');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10040','RL0025','M0001', DATE '1999-05-04','AllStar');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10041','RL0001','M0001', DATE '2014-08-25','Animals');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10042','RL0011','M0001', DATE '2016-08-20','WhiteFerrari');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10043','RL0007','M0001', DATE '2012-08-01','LockedOutOfHeaven');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10044','RL0019','M0003', DATE '1974-10-11','KillerQueen');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10044','RL0019','M0004', DATE '1974-10-11','KillerQueen');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10045','RL0021','M0001', DATE '1984-01-27','CountingStars');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10046','RL0017','M0001', DATE '2013-06-19','DoIWannaKnow');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10047','RL0006','M0001', DATE '2014-09-24','ThinkingOutLoud');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10048','RL0007','M0001', DATE '2010-1-04','Fearless');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10049','RL0023','M0001', DATE '2020-07-10','BloodOnMyJeans');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10050','RL0036','M0001', DATE '2010-09-14','BlackandYellow');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10051','RL0037','M0001', DATE '1999-06-15','YoullBeinMyHeart');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10052','RL0018','M0001', DATE '2010-07-20','JusttheWayYouAre');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10053','RL0039','M0001', DATE '2019-11-29','BlindingLights');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10054','RL0019','M0001', DATE '1982-02-28','EyeoftheTiger');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10055','RL0024','M0001', DATE '2012-01-23','GiveYourHeartaBreak');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10056','RL0003','M0001', DATE '2001-08-13','ChopSuey!');
+INSERT INTO Distribution (songId, recordLabelId, marketId, distributionDate, songTitle) VALUES ('S10057','RL0010','M0001', DATE '2019-04-12','BoyWithLuv');
