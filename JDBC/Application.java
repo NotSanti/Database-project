@@ -1,65 +1,54 @@
+package JDBC;
+
 import java.io.Console;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class Application {
+    
     static Connection con;
+    static String username;
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException{
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Scanner s = new Scanner(System.in);
         System.out.print("Enter Username: ");
-        String username = s.nextLine();
+        username = s.nextLine();
 
         Console console = System.console();
         String password = new String(console.readPassword("Enter Password: "));
-        getConnection(username = "A2032367", password = "SQL2021");
+        getConnection(username, password);
 
-
-        // Statement stmt = con.createStatement();
-        // String query = "SELECT title FROM books";
-        // ResultSet rs = stmt.executeQuery(query);
-
-        // while(rs.next()){
-        //     String str = rs.getString("title");
-        //     System.out.println(str);
-        // }
-        //     if(stmt != null){
-        //         stmt.close();
-        //     }
-
-        testQuery();
+        updateAuditLog();
 
     }
 
     public static void getConnection(String username, String password) throws SQLException{
+        System.out.println("connecting");
         con = DriverManager.getConnection("jdbc:oracle:thin:@pdbora19c.dawsoncollege.qc.ca:1521/pdbora19c.dawsoncollege.qc.ca", username, password);
-    }
-
-        // public static Connection getConnection(String username, String password) throws SQLException {
-        //     Connection conn;
-            
-        //     conn = DriverManager.getConnection("jdbc:oracle:thin:@pdbora19c.dawsoncollege.qc.ca:1521/pdbora19c.dawsoncollege.qc.ca", username, password);
-        //     System.out.println("connceted to the database");
-        //     return conn;
-        // }
-
-    public static void testQuery() throws SQLException {
-        Statement stmt = con.createStatement();
-        String query = "SELECT title FROM books";
-        ResultSet rs = stmt.executeQuery(query);
-
-        while(rs.next()){
-            String s = rs.getString("title");
-            System.out.println(s);
+        if(con.isValid(1000)){
+        System.out.println("connected");
         }
-            if(stmt != null){
-                stmt.close();
-            }
-        
     }
+    public static void updateAuditLog() throws SQLException{
+        Date date = new Date(System.currentTimeMillis());
+        
+
+        String query = "INSERT INTO AUDITLOG(username, dateinfo) VALUES(?,?)";
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, username);
+        stmt.setDate(2, date);
+        //needs to give an explanation too
+        stmt.executeUpdate();
+    }
+
 }
