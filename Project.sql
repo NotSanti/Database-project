@@ -15,6 +15,10 @@ BEGIN
 END showContributorsForSong;
 -- Question #2 (Matteo)
 -- Show all details of a recording/compilation
+SELECT *
+FROM components
+INNER JOIN song
+USING(songid);
 
 
 -- Question #3 (Oleks)

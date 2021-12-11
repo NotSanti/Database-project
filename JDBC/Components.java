@@ -1,3 +1,5 @@
+package JDBC;
+
 import java.util.List;
 
 public class Components {
@@ -8,10 +10,10 @@ public class Components {
     protected String componentNum;
     protected int offsetSong;
     protected int durationSong;
-    protected List<Song> songs;
+    //protected List<Song> songs;
 
     public Components(String componentId, String songId, int offsetComponent, int durationComponent,
-            String componentNum, int offsetSong, int durationSong, List<Song> songs) {
+            String componentNum, int offsetSong, int durationSong) {
         this.componentId = componentId;
         this.songId = songId;
         this.offsetComponent = offsetComponent;
@@ -19,6 +21,14 @@ public class Components {
         this.componentNum = componentNum;
         this.offsetSong = offsetSong;
         this.durationSong = durationSong;
-        this.songs = songs;
+        //this.songs = songs;
+    }
+
+    @Override
+    public String toString(){
+        
+        return ("componentID: "+this.componentId+" || songID: "+songId+" || offSetComponent: "+this.offsetComponent+
+        " || durationComponent: "+this.durationComponent+" || componentNum: "+this.componentNum+"|| durationSong: "
+        + this.durationSong+" ||"+"\n");
     }
 }

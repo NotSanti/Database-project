@@ -1,3 +1,5 @@
+package JDBC;
+
 public class Roles {
     protected String roleId;
     protected String roleName;
@@ -5,5 +7,12 @@ public class Roles {
     public Roles(String roleId, String roleName) {
         this.roleId = roleId;
         this.roleName = roleName;
+    }
+
+    @Override
+    public String toString(){
+        
+        return ("|| roleID: "+ this.roleId+" || "+
+        "roleName: "+this.roleName+" || " + "\n");
     }
 }
