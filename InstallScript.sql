@@ -34,9 +34,9 @@ CREATE TABLE RolesConSong (
     songId VARCHAR2(20),
     contributorId VARCHAR(20),
     roleId VARCHAR2(20),
-    FOREIGN KEY (roleId) REFERENCES Roles(roleId),
-    FOREIGN KEY (songId) REFERENCES Song(songId),
-    FOREIGN KEY (contributorId) REFERENCES Contributors(contributorId),
+    FOREIGN KEY (roleId) REFERENCES Roles(roleId) ON DELETE CASCADE,
+    FOREIGN KEY (songId) REFERENCES Song(songId) ON DELETE CASCADE,
+    FOREIGN KEY (contributorId) REFERENCES Contributors(contributorId) ON DELETE CASCADE,
     PRIMARY KEY(contributorId,roleId,songId)
 );
 
@@ -49,8 +49,8 @@ CREATE TABLE Components (
     songUsed VARCHAR2(20),
     offsetSong NUMBER(10),
     durationSong NUMBER(10),
-    FOREIGN KEY (songId) REFERENCES Song(songId),
-    FOREIGN KEY (songUsed) REFERENCES Song(songId)
+    FOREIGN KEY (songId) REFERENCES Song(songId) ON DELETE CASCADE,
+    FOREIGN KEY (songUsed) REFERENCES Song(songId) ON DELETE CASCADE
 );
 
 CREATE TABLE Distribution (
@@ -59,9 +59,9 @@ CREATE TABLE Distribution (
     marketId VARCHAR2(20),
     distributionDate Date,
     songTitle VARCHAR2(30),
-    FOREIGN KEY (songId) REFERENCES Song(songId),
-    FOREIGN KEY (recordLabelId) REFERENCES RecordLabel(recordLabelId),
-    FOREIGN KEY (marketId) REFERENCES Markets(marketId)
+    FOREIGN KEY (songId) REFERENCES Song(songId) ON DELETE CASCADE,
+    FOREIGN KEY (recordLabelId) REFERENCES RecordLabel(recordLabelId) ON DELETE CASCADE,
+    FOREIGN KEY (marketId) REFERENCES Markets(marketId) ON DELETE CASCADE
 );
 
 
