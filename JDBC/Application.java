@@ -54,11 +54,11 @@ public class Application {
                     String comId = s.nextLine();
                     updateComponents(comId);
                 } else if(choice.equals("2")){
-                    insertComponent();
+                    //insertComponent();
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER COMPONENT ID --- ");
                     String comId = s.nextLine();
-                    deleteComponent(comId);
+                    //deleteComponent(comId);
                 }
             } else if(table.equals("2")){
                 System.out.println(" --- CONTRIBUTORS --- ");
@@ -470,6 +470,122 @@ public class Application {
         System.out.println(" --- SELECT WHICH TABLE TO MODIFY BY TYPING THE NUMBER --- ");
 
 
+    }
+
+    public static void insertComponents() throws SQLException{
+        String query = "INSERT INTO components(songid,offsetcomponent,durationcomponent,songused,offsetsong,durationsong) VALUES(?,?,?,?,?,?)";
+        PreparedStatement stmt = con.prepareStatement(query);
+        
+        Scanner s = new Scanner(System.in);
+        System.out.println("ENTER songId: ");
+        String songId = s.nextLine();
+        System.out.println("ENTER offsetComponent:");
+        int osc = s.nextInt();
+        System.out.println("ENTER durationComponent:");
+        int dc = s.nextInt();
+        System.out.println("ENTER songUsed:");
+        String su = s.nextLine();
+        System.out.println("ENTER offsetSong:");
+        int os = s.nextInt();        
+        System.out.println("ENTER durationSong:");
+        int ds = s.nextInt();
+        stmt.setString(1, songId);
+        stmt.setInt(2, osc);
+        stmt.setInt(3, dc);
+        stmt.setString(4, su);
+        stmt.setInt(5, os);
+        stmt.setInt(6, ds);
+        stmt.executeUpdate();
+        System.out.println("INSERT successfully completed");
+        stmt.close();
+    }
+
+    public static void insertContributors() throws SQLException{
+        String query = "INSERT INTO contributors(contributorid,fullname) VALUES(?,?)";
+        PreparedStatement stmt = con.prepareStatement(query);
+        
+        Scanner s = new Scanner(System.in);
+        System.out.println("ENTER Contributorid:");
+        String conid = s.nextLine();
+        System.out.println("ENTER fullName:");
+        String name = s.nextLine();
+        stmt.setString(1, conid);
+        stmt.setString(2, name);
+        stmt.executeUpdate();
+        System.out.println("INSERT successfully completed");
+        stmt.close();
+    }
+
+    public static void insertDistribution() throws SQLException{
+        String query = "INSERT INTO distribution(songid, recordlabelid, marketid, distributiondate, songtitle) VALUES(?,?,?,?,?)";
+        PreparedStatement stmt = con.prepareStatement(query);
+        
+        Scanner s = new Scanner(System.in);
+        System.out.println("ENTER songID:");
+        String sid = s.nextLine();
+        System.out.println("ENTER recordLabelID:");
+        String rid = s.nextLine();
+        System.out.println("ENTER marketID:");
+        String mid = s.nextLine();
+        System.out.println("ENTER releaseDate:");
+        String date = s.nextLine();
+        System.out.println("ENTER song title:");
+        String title = s.nextLine();
+       
+        stmt.setString(1, sid);
+        stmt.setString(2, rid);
+        stmt.setString(3, mid);
+        //needs to be changed to set date and parse date into an actual date type
+        stmt.setString(4, date);
+        stmt.setString(5, title);
+        stmt.executeUpdate();
+        System.out.println("INSERT successfully completed");
+        stmt.close();
+    }
+
+    public static void insertMarkets() throws SQLException{
+        String query = "INSERT INTO markets(marketid, area) VALUES(?, ?)";
+        PreparedStatement stmt = con.prepareStatement(query);
+        
+        Scanner s = new Scanner(System.in);
+        System.out.println("ENTER marketID:");
+        String market = s.nextLine();
+        System.out.println("ENTER area:");
+        String area = s.nextLine();
+            
+        stmt.setString(1, market);
+        stmt.setString(2, area);
+        stmt.executeUpdate();
+        System.out.println("INSERT successfully completed");
+        stmt.close();
+    }
+
+    public static void insertRecordLabel() throws SQLException{
+        String query = "INSERT INTO recordlabel(recordlabelid, name) VALUES(?,?)";
+        PreparedStatement stmt = con.prepareStatement(query);
+        
+        Scanner s = new Scanner(System.in);
+        System.out.println("ENTER recordlabelID:");
+        String rlid = s.nextLine();
+        System.out.println("ENTER Name:");
+        String name = s.nextLine();
+        
+        stmt.setString(1, rlid);
+        stmt.setString(2, name);
+    }
+
+    public static void insertRoles() throws SQLException{
+        String query = "INSERT INTO roles(roleid, rolename) VALUES(?, ?)";
+        PreparedStatement stmt = con.prepareStatement(query);
+        
+        Scanner s = new Scanner(System.in);
+        System.out.println("ENTER roleID:");
+        String rlid = s.nextLine();
+        System.out.println("ENTER RoleName:");
+        String name = s.nextLine();
+          
+        stmt.setString(1, rlid);
+        stmt.setString(2, name);
     }
 
 }
