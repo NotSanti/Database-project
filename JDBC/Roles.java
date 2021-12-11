@@ -8,4 +8,11 @@ public class Roles {
         this.roleId = roleId;
         this.roleName = roleName;
     }
+
+    @Override
+    public String toString(){
+        
+        return ("|| roleID: "+ this.roleId+" || "+
+        "roleName: "+this.roleName+" || " + "\n");
+    }
 }
