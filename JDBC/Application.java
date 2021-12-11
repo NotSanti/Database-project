@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
+import java.util.zip.DataFormatException;
 
 public class Application {
     
@@ -57,22 +58,47 @@ public class Application {
             if(table.equals("2")){
                 System.out.println(" --- CONTRIBUTORS --- ");
                 initContributors();
+                if(choice.equals("1")){
+                    System.out.println(" --- ENTER CONTRIBUTORID(ex.CO0001) --- ");
+                    String conID = s.nextLine();
+                    updateContributors(conID);
+                }
             }
             if(table.equals("3")){
                 System.out.println(" --- DISTRIBUTIONS --- ");
                 initDistribution();
+                if(choice.equals("1")){
+                    System.out.println(" --- ENTER SONGID(ex.S10025) --- ");
+                    String songid = s.nextLine();
+                    updateDistribution(songid);
+                }
             }
             if(table.equals("4")){
                 System.out.println(" --- MARKETS --- ");
                 initMarkets();
+                if(choice.equals("1")){
+                    System.out.println(" --- ENTER MARKETID --- ");
+                    String mid = s.nextLine();
+                    updateMarkets(mid);
+                }
             }
             if(table.equals("5")){
                 System.out.println(" --- RECORD LABELS --- ");
                 initRecordLabel();
+                if(choice.equals("1")){
+                    System.out.println(" --- ENTER RECORD LABEL ID --- ");
+                    String rid = s.nextLine();
+                    updateRecordLabel(rid);
+                }
             }
             if(table.equals("6")){
                 System.out.println(" --- ROLES --- ");
                 initRoles();
+                if(choice.equals("1")){
+                    System.out.println(" --- ENTER ROLE ID --- ");
+                    String rid = s.nextLine();
+                    updateRoles(rid);
+                }
             }
         }
         if(choice.equals("4")){
@@ -141,8 +167,148 @@ public class Application {
         System.out.println("UPDATE successfully completed");
     } 
 
-    public static void updateContributors(String conID){
+    public static void updateContributors(String conID) throws SQLException{
+        String query = "SELECT * FROM contributors WHERE contributorid = ?";
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, conID);
+        ResultSet rs = stmt.executeQuery();
+        int i=0;
+        while(rs.next()){
+            i++;
+            String contributorId = rs.getString("contributorId");
+            String name = rs.getString("fullname");
+            Contributors contributors = new Contributors(contributorId, name);
+            System.out.println(i+" -- "+contributors);
+        }
+        stmt.close();
+        
+        Scanner s = new Scanner(System.in);
+        System.out.println("ENTER Contributorid:");
+        String conid = s.nextLine();
+        System.out.println("ENTER fullName:");
+        String name = s.nextLine();
+        String q2 = "UPDATE contributors SET contributorid = ?, fullname = ?";
+        stmt = con.prepareStatement(q2);
+        stmt.setString(1, conid);
+        stmt.setString(2, name);
+    }
 
+    public static void updateDistribution(String songid) throws SQLException{
+        String query = "SELECT * FROM distribution WHERE songid = ?";
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, songid);
+        ResultSet rs = stmt.executeQuery();
+        int i=0;
+        while(rs.next()){
+            i++;
+            String songID = rs.getString("songid");
+            String recordLabelID = rs.getString("recordlabelid");
+            String marketid = rs.getString("marketid");
+            Date distDate = rs.getDate("distributiondate");
+            String songTitle = rs.getString("songtitle");
+            Distribution d = new Distribution(songID, recordLabelID, distDate, marketid, songTitle);
+            System.out.println(i+" -- "+d);
+        }
+        stmt.close();
+        
+        Scanner s = new Scanner(System.in);
+        System.out.println("ENTER songID:");
+        String sid = s.nextLine();
+        System.out.println("ENTER recordLabelID:");
+        String rid = s.nextLine();
+        System.out.println("ENTER marketID:");
+        String mid = s.nextLine();
+        System.out.println("ENTER releaseDate:");
+        String date = s.nextLine();
+        
+        System.out.println("ENTER song title:");
+        String title = s.nextLine();
+        String q2 = "UPDATE distribution SET songid = ?, recordlabelid = ?, marketid = ?, distributiondate = ?, songtitle = ?";
+        stmt = con.prepareStatement(q2);
+        stmt.setString(1, sid);
+        stmt.setString(2, rid);
+        stmt.setString(3, mid);
+        //needs to be changed to set date and parse date into an actual date type
+        stmt.setString(4, date);
+        stmt.setString(5, title);
+    }
+
+    public static void updateMarkets(String mid) throws SQLException{
+        String query = "SELECT * FROM markets WHERE marketid = ?";
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, mid);
+        ResultSet rs = stmt.executeQuery();
+        int i=0;
+        while(rs.next()){
+            i++;
+            String marketId = rs.getString("marketid");
+            String area = rs.getString("area");
+            Markets m = new Markets(marketId, area);
+            System.out.println(i+" -- "+m);
+        }
+        stmt.close();
+        Scanner s = new Scanner(System.in);
+        System.out.println("ENTER marketID:");
+        String market = s.nextLine();
+        System.out.println("ENTER area:");
+        String area = s.nextLine();
+        
+        String q2 = "UPDATE markets SET marketid = ?, area = ?";
+        stmt = con.prepareStatement(q2);
+        stmt.setString(1, market);
+        stmt.setString(2, area);
+    }
+
+    public static void updateRecordLabel(String rid) throws SQLException{
+        String query = "SELECT * FROM recordlabel WHERE recordlabelid = ?";
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, rid);
+        ResultSet rs = stmt.executeQuery();
+        int i=0;
+        while(rs.next()){
+            i++;
+            String marketId = rs.getString("marketid");
+            String area = rs.getString("area");
+            Markets m = new Markets(marketId, area);
+            System.out.println(i+" -- "+m);
+        }
+        stmt.close();
+        Scanner s = new Scanner(System.in);
+        System.out.println("ENTER recordlabelID:");
+        String rlid = s.nextLine();
+        System.out.println("ENTER Name:");
+        String name = s.nextLine();
+        
+        String q2 = "UPDATE recordlabel SET recordlabelid = ?, name = ?";
+        stmt = con.prepareStatement(q2);
+        stmt.setString(1, rlid);
+        stmt.setString(2, name);
+    }
+
+    public static void updateRoles(String rid) throws SQLException{
+        String query = "SELECT * FROM roles WHERE roleid = ?";
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, rid);
+        ResultSet rs = stmt.executeQuery();
+        int i=0;
+        while(rs.next()){
+            i++;
+            String roleID = rs.getString("roleid");
+            String name = rs.getString("rolename");
+            Roles r = new Roles(roleID, name);
+            System.out.println(i+" -- "+r);
+        }
+        stmt.close();
+        Scanner s = new Scanner(System.in);
+        System.out.println("ENTER roleID:");
+        String rlid = s.nextLine();
+        System.out.println("ENTER RoleName:");
+        String name = s.nextLine();
+        
+        String q2 = "UPDATE roles SET roleid = ?, rolename = ?";
+        stmt = con.prepareStatement(q2);
+        stmt.setString(1, rlid);
+        stmt.setString(2, name);
     }
 
     public static void updateAuditLog() throws SQLException{
