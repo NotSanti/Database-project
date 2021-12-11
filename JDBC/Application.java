@@ -44,27 +44,39 @@ public class Application {
         String choice = s.nextLine();
         if(choice.equals("1") || choice.equals("2") || choice.equals("3")){
             showTables();
-            choice = s.nextLine();
-            if(choice.equals("1")){
+            String table = s.nextLine();
+            if(table.equals("1")){
+                System.out.println(" --- COMPONENTS --- ");
                 initComponents();
+                if(choice.equals("1")){
+                    System.out.println(" --- ENTER ROW NUM --- ");
+                    String rowNum = s.nextLine();
+                    updateComponents(rowNum);
+                }
             }
-            if(choice.equals("2")){
+            if(table.equals("2")){
+                System.out.println(" --- CONTRIBUTORS --- ");
                 initContributors();
             }
-            if(choice.equals("3")){
+            if(table.equals("3")){
+                System.out.println(" --- DISTRIBUTIONS --- ");
                 initDistribution();
             }
-            if(choice.equals("4")){
+            if(table.equals("4")){
+                System.out.println(" --- MARKETS --- ");
                 initMarkets();
             }
-            if(choice.equals("5")){
+            if(table.equals("5")){
+                System.out.println(" --- RECORD LABELS --- ");
                 initRecordLabel();
             }
-            if(choice.equals("6")){
+            if(table.equals("6")){
+                System.out.println(" --- ROLES --- ");
                 initRoles();
             }
         }
         if(choice.equals("4")){
+            System.out.println(" --- PREPARED STATMENTS --- ");
             System.out.println("1 -- search contributors and roles to a song");
             System.out.println("2 -- get a breakdown of a compilation");
             System.out.println("3 -- update fields of a song");
@@ -82,6 +94,57 @@ public class Application {
         System.out.println("connected");
         }
     }
+
+    public static void updateComponents(String rowNum) throws SQLException{
+        String id = "COM000"+rowNum;
+        String query = "SELECT * FROM components WHERE componentid = ?";
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, id);
+        ResultSet rs = stmt.executeQuery();
+        int i=0;
+        while(rs.next()){
+            i++;
+            System.out.println("working");
+            String componentId = rs.getString("componentid");
+            String songId = rs.getString("songid");
+            int offsetComponent = rs.getInt("offsetcomponent");
+            int durationComponent = rs.getInt("durationcomponent");
+            String songUsed = rs.getString("songused");
+            int offsetSong = rs.getInt("offsetsong");
+            int durationSong = rs.getInt("durationsong");
+            Components components = new Components(componentId, songId, offsetComponent, durationComponent, songUsed, offsetSong, durationSong);
+            System.out.println(i+" -- "+components);
+        }
+        stmt.close(); 
+        Scanner s = new Scanner(System.in);
+        System.out.println("ENTER songId: ");
+        String songId = s.nextLine();
+        System.out.println("ENTER offsetComponent:");
+        int osc = s.nextInt();
+        System.out.println("ENTER durationComponent:");
+        int dc = s.nextInt();
+        System.out.println("ENTER songUsed:");
+        String su = s.nextLine();
+        System.out.println("ENTER offsetSong:");
+        int os = s.nextInt();        
+        System.out.println("ENTER durationSong:");
+        int ds = s.nextInt();
+        String q2 = "UPDATE components SET songId = ?, offsetcomponent = ?, durationcomponent = ?, songused = ?, offsetsong = ?, durationsong = ?";
+        stmt = con.prepareStatement(q2);
+        stmt.setString(1, songId);
+        stmt.setInt(2, osc);
+        stmt.setInt(3, dc);
+        stmt.setString(4, su);
+        stmt.setInt(5, os);
+        stmt.setInt(6, ds);
+        stmt.executeUpdate();
+        System.out.println("UPDATE successfully completed");
+    } 
+
+    public static void updateContributors(String conID){
+
+    }
+
     public static void updateAuditLog() throws SQLException{
         Date date = new Date(System.currentTimeMillis());
         
@@ -226,18 +289,15 @@ public class Application {
         stmt.executeUpdate();
     }
 
-    public static void showComponents(){
-
-    }
-
     public static void showTables(){
+        System.out.println(" --- TABLES --- ");
         System.out.println("1 -- COMPONENTS");
         System.out.println("2 -- CONTRIBUTORS");
         System.out.println("3 -- DISTRIBUTION");
         System.out.println("4 -- MARKETS");
         System.out.println("5 -- RECORDLABEL");
         System.out.println("6 -- ROLES");
-        System.out.println("SELECT WHICH TABLE TO MODIFY");
+        System.out.println(" --- SELECT WHICH TABLE TO MODIFY BY TYPING THE NUMBER --- ");
 
 
     }
