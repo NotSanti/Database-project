@@ -50,12 +50,17 @@ public class Application {
                 System.out.println(" --- COMPONENTS --- ");
                 initComponents();
                 if(choice.equals("1")){
-                    System.out.println(" --- ENTER ROW NUM --- ");
-                    String rowNum = s.nextLine();
-                    updateComponents(rowNum);
+                    System.out.println(" --- ENTER COMPONENT ID --- ");
+                    String comId = s.nextLine();
+                    updateComponents(comId);
+                } else if(choice.equals("2")){
+                    insertComponent();
+                } else if(choice.equals("3")){
+                    System.out.println(" --- ENTER COMPONENT ID --- ");
+                    String comId = s.nextLine();
+                    deleteComponent(comId);
                 }
-            }
-            if(table.equals("2")){
+            } else if(table.equals("2")){
                 System.out.println(" --- CONTRIBUTORS --- ");
                 initContributors();
                 if(choice.equals("1")){
@@ -121,11 +126,10 @@ public class Application {
         }
     }
 
-    public static void updateComponents(String rowNum) throws SQLException{
-        String id = "COM000"+rowNum;
+    public static void updateComponents(String comId) throws SQLException{
         String query = "SELECT * FROM components WHERE componentid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, id);
+        stmt.setString(1, comId);
         ResultSet rs = stmt.executeQuery();
         int i=0;
         while(rs.next()){
