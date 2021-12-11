@@ -54,7 +54,7 @@ public class Application {
                     String comId = s.nextLine();
                     updateComponents(comId);
                 } else if(choice.equals("2")){
-                    //insertComponent();
+                    insertComponents();
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER COMPONENT ID --- ");
                     String comId = s.nextLine();
@@ -68,6 +68,9 @@ public class Application {
                     String conID = s.nextLine();
                     updateContributors(conID);
                 }
+                if(choice.equals("2")){
+                    insertContributors();
+                }
             }
             if(table.equals("3")){
                 System.out.println(" --- DISTRIBUTIONS --- ");
@@ -76,6 +79,9 @@ public class Application {
                     System.out.println(" --- ENTER SONGID(ex.S10025) --- ");
                     String songid = s.nextLine();
                     updateDistribution(songid);
+                }
+                if(choice.equals("2")){
+                    insertDistribution();
                 }
             }
             if(table.equals("4")){
@@ -86,6 +92,9 @@ public class Application {
                     String mid = s.nextLine();
                     updateMarkets(mid);
                 }
+                if(choice.equals("2")){
+                    insertMarkets();
+                }
             }
             if(table.equals("5")){
                 System.out.println(" --- RECORD LABELS --- ");
@@ -95,6 +104,9 @@ public class Application {
                     String rid = s.nextLine();
                     updateRecordLabel(rid);
                 }
+                if(choice.equals("2")){
+                    insertRecordLabel();
+                }
             }
             if(table.equals("6")){
                 System.out.println(" --- ROLES --- ");
@@ -103,6 +115,9 @@ public class Application {
                     System.out.println(" --- ENTER ROLE ID --- ");
                     String rid = s.nextLine();
                     updateRoles(rid);
+                }
+                if(choice.equals("2")){
+                    insertRoles();
                 }
             }
         }
