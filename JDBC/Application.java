@@ -52,27 +52,86 @@ public class Application {
                     System.out.println(" --- ENTER COMPONENT ID --- ");
                     String comId = s.nextLine();
                     updateComponents(comId);
+                } else if(choice.equals("2")){
+                    insertComponent();
+                } else if(choice.equals("3")){
+                    System.out.println(" --- ENTER COMPONENT ID --- ");
+                    String comId = s.nextLine();
+                    deleteComponent(comId);
                 }
-            }
-            if(table.equals("2")){
+            } else if(table.equals("2")){
                 System.out.println(" --- CONTRIBUTORS --- ");
                 initContributors();
-            }
-            if(table.equals("3")){
+                if(choice.equals("1")){
+                    System.out.println(" --- ENTER CONTRIBUTOR ID --- ");
+                    String conId = s.nextLine();
+                    updateContributors(conId);
+                } else if(choice.equals("2")){
+                    insertContributor();
+                } else if(choice.equals("3")){
+                    System.out.println(" --- ENTER CONTRIBUTOR ID --- ");
+                    String conId = s.nextLine();
+                    deleteContributor(conId);
+                }
+            } else if(table.equals("3")){
                 System.out.println(" --- DISTRIBUTIONS --- ");
                 initDistribution();
+                if(choice.equals("1")){
+                    System.out.println(" --- ENTER SONG ID --- ");
+                    String disId = s.nextLine();
+                    updateDistributors(disId);
+                } else if(choice.equals("2")){
+                    insertDistributor();
+                } else if(choice.equals("3")){
+                    System.out.println(" --- ENTER SONG ID --- ");
+                    String disId = s.nextLine();
+                    deleteDistributor(disId);
+                }
             }
             if(table.equals("4")){
                 System.out.println(" --- MARKETS --- ");
                 initMarkets();
+                if(choice.equals("1")){
+                    System.out.println(" --- ENTER MARKET ID --- ");
+                    String marId = s.nextLine();
+                    updateMarkets(marId);
+                } else if(choice.equals("2")){
+                    insertMarket();
+                } else if(choice.equals("3")){
+                    System.out.println(" --- ENTER MARKET ID --- ");
+                    String marId = s.nextLine();
+                    deleteMarket(marId);
+                }
             }
             if(table.equals("5")){
                 System.out.println(" --- RECORD LABELS --- ");
                 initRecordLabel();
+                if(choice.equals("1")){
+                    System.out.println(" --- ENTER RECORD LABEL ID --- ");
+                    String rlId = s.nextLine();
+                    updateRecordLabel(rlId);
+                } else if(choice.equals("2")){
+                    insertRecordLabel();
+                } else if(choice.equals("3")){
+                    System.out.println(" --- ENTER RECORD LABEL ID --- ");
+                    String rlId = s.nextLine();
+                    deleteRecordLabel(rlId);
+                }
             }
             if(table.equals("6")){
                 System.out.println(" --- ROLES --- ");
                 initRoles();
+                if(choice.equals("1")){
+                    System.out.println(" --- ENTER ROLE ID --- ");
+                    String roId = s.nextLine();
+                    updateRole(roId);
+                } else if(choice.equals("2")){
+                    insertRole();
+                } else if(choice.equals("3")){
+                    System.out.println(" --- ENTER ROLE ID --- ");
+                    String roId = s.nextLine();
+                    deleteRole(roId);
+                }
             }
         }
         if(choice.equals("4")){
