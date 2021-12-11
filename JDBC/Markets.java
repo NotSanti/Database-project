@@ -7,13 +7,16 @@ public class Markets {
     protected String area;
     protected List<Distribution> distributions;
     
-    public Markets(String marketId, String area, List<Distribution> distributions) {
+    public Markets(String marketId, String area) {
         this.marketId = marketId;
         this.area = area;
-        this.distributions = distributions;
+        //this.distributions = distributions;
     }
 
-    public static void populateTable(){
+    @Override
+    public String toString(){
         
+        return ("|| marketID: "+ this.marketId+" || "
+        +"Area: "+ this.area+ "||"+"\n");
     }
 }

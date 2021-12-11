@@ -35,18 +35,14 @@ public class Application {
         getConnection(username , password );
 
         System.out.println("Type the number of the choice");
-        // System.out.println("1 -- search contributors and roles to a song");
-        // System.out.println("2 -- get a breakdown of a compilation");
-        // System.out.println("3 -- update fields of a song");
-        // System.out.println("4 -- search contributions and roles that an artist has had");
-        // System.out.println("5 -- show roles of an artist");
+        
         System.out.println("1 -- UPDATE a table");
         System.out.println("2 -- INSERT a table");
         System.out.println("3 -- DELETE a table");
         System.out.println("4 -- Prepared statements");
 
         String choice = s.nextLine();
-        if(choice.equals("1")){
+        if(choice.equals("1") || choice.equals("2") || choice.equals("3")){
             showTables();
             choice = s.nextLine();
             if(choice.equals("1")){
@@ -58,6 +54,22 @@ public class Application {
             if(choice.equals("3")){
                 initDistribution();
             }
+            if(choice.equals("4")){
+                initMarkets();
+            }
+            if(choice.equals("5")){
+                initRecordLabel();
+            }
+            if(choice.equals("6")){
+                initRoles();
+            }
+        }
+        if(choice.equals("4")){
+            System.out.println("1 -- search contributors and roles to a song");
+            System.out.println("2 -- get a breakdown of a compilation");
+            System.out.println("3 -- update fields of a song");
+            System.out.println("4 -- search contributions and roles that an artist has had");
+            System.out.println("5 -- show roles of an artist");
         }
         //updateAuditLog();
 
@@ -136,6 +148,52 @@ public class Application {
         stmt.close();
     }
 
+    public static void initMarkets() throws SQLException{
+        String query = "SELECT * FROM markets";
+        PreparedStatement stmt = con.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
+        int i=0;
+        while(rs.next()){
+            i++;
+            String marketId = rs.getString("marketid");
+            String area = rs.getString("area");
+            Markets m = new Markets(marketId, area);
+            System.out.println(i+" -- "+m);
+        }
+        stmt.close();
+    }
+
+    public static void initRecordLabel() throws SQLException{
+        String query = "SELECT * FROM recordlabel";
+        PreparedStatement stmt = con.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
+        int i=0;
+        while(rs.next()){
+            i++;
+            String recordlabelId = rs.getString("recordlabelid");
+            String name = rs.getString("name");
+            RecordLabel r = new RecordLabel(recordlabelId, name);
+            System.out.println(i+" -- "+r);
+        }
+        stmt.close();
+    }
+
+    public static void initRoles() throws SQLException{
+        String query = "SELECT * FROM roles";
+        PreparedStatement stmt = con.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
+        int i=0;
+        while(rs.next()){
+            i++;
+            String roleID = rs.getString("roleid");
+            String name = rs.getString("rolename");
+            Roles r = new Roles(roleID, name);
+            System.out.println(i+" -- "+r);
+        }
+        stmt.close();
+    }
+
+
     public static void getConRoles(String song) throws SQLException{
         String query = "SELECT fullname,rolename FROM contributors"
         +" JOIN rolesconsong  rcs USING(contributorid)"
@@ -179,8 +237,6 @@ public class Application {
         System.out.println("4 -- MARKETS");
         System.out.println("5 -- RECORDLABEL");
         System.out.println("6 -- ROLES");
-        //System.out.println("7 -- ROLESCONSONG");
-        System.out.println("7 -- SONG");
         System.out.println("SELECT WHICH TABLE TO MODIFY");
 
 
