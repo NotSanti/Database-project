@@ -3,13 +3,8 @@ package JDBC;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.sound.sampled.CompoundControl;
-
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.common.record.Record;
 
 public class JDBCUnitTests {
     @Test
