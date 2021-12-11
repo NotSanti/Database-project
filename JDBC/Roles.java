@@ -1,3 +1,5 @@
+package JDBC;
+
 public class Roles {
     protected String roleId;
     protected String roleName;

@@ -1,3 +1,5 @@
+package JDBC;
+
 import java.util.List;
 
 public class Markets {
@@ -9,5 +11,9 @@ public class Markets {
         this.marketId = marketId;
         this.area = area;
         this.distributions = distributions;
+    }
+
+    public static void populateTable(){
+        
     }
 }

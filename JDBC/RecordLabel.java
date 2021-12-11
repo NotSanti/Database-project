@@ -1,3 +1,5 @@
+package JDBC;
+
 import java.util.List;
 
 public class RecordLabel {
