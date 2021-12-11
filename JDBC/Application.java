@@ -49,9 +49,9 @@ public class Application {
                 System.out.println(" --- COMPONENTS --- ");
                 initComponents();
                 if(choice.equals("1")){
-                    System.out.println(" --- ENTER ROW NUM --- ");
-                    String rowNum = s.nextLine();
-                    updateComponents(rowNum);
+                    System.out.println(" --- ENTER COMPONENT ID --- ");
+                    String comId = s.nextLine();
+                    updateComponents(comId);
                 }
             }
             if(table.equals("2")){
@@ -95,11 +95,10 @@ public class Application {
         }
     }
 
-    public static void updateComponents(String rowNum) throws SQLException{
-        String id = "COM000"+rowNum;
+    public static void updateComponents(String comId) throws SQLException{
         String query = "SELECT * FROM components WHERE componentid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, id);
+        stmt.setString(1, comId);
         ResultSet rs = stmt.executeQuery();
         int i=0;
         while(rs.next()){
