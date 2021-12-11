@@ -16,4 +16,25 @@ public class Song {
         this.roles = roles;
         this.components = components;
     }
+
+    public String getSongId() {
+        return songId;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public List<Contributors> getContributors() {
+        return contributors;
+    }
+
+    public List<Roles> getRoles() {
+        return roles;
+    }
+
+    public List<Components> getComponents() {
+        return components;
+    }
+    
 }

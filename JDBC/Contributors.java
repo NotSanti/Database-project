@@ -17,4 +17,13 @@ public class Contributors {
         return ("|| contributorId: "+this.contributorId+
                 " || fullName: "+this.name +" ||"+ "\n");
     }
+
+    public String getContributorId() {
+        return contributorId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
 }

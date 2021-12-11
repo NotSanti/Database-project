@@ -19,4 +19,17 @@ public class RecordLabel {
         return ("|| RecordLabelID: "+ this.recordLabelId+" || "+
         "Name: "+this.name+" || " + "\n");
     }
+
+    public String getRecordLabelId() {
+        return recordLabelId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Distribution> getDistributions() {
+        return distributions;
+    }
+    
 }

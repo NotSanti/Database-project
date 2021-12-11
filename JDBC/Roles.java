@@ -15,4 +15,13 @@ public class Roles {
         return ("|| roleID: "+ this.roleId+" || "+
         "roleName: "+this.roleName+" || " + "\n");
     }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+ 
 }
