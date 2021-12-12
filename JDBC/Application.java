@@ -165,6 +165,12 @@ public class Application {
         } 
     }
 
+    /**
+     * 
+     * @param username user username
+     * @param password user password
+     * @throws SQLException
+     */
     public static void getConnection(String username, String password) throws SQLException{
         System.out.println("connecting");
         con = DriverManager.getConnection("jdbc:oracle:thin:@pdbora19c.dawsoncollege.qc.ca:1521/pdbora19c.dawsoncollege.qc.ca", username = "A2032367", password = "SQL2021");
@@ -174,6 +180,11 @@ public class Application {
         }
     }
 
+    /**
+     * 
+     * @param info Describing if it was an update, insert or delete and into which table
+     * @throws SQLException
+     */
     public static void updateAuditLog(String info) throws SQLException{
         Date date = new Date(System.currentTimeMillis());
         
@@ -186,6 +197,11 @@ public class Application {
         System.out.println("UPDATE successfully completed");
     }
 
+    /**
+     * 
+     * @param comId componentID
+     * @throws SQLException
+     */
     public static void updateComponents(String comId) throws SQLException{
         String query = "SELECT * FROM components WHERE componentid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -228,6 +244,11 @@ public class Application {
         System.out.println("UPDATE successfully completed");
     } 
 
+    /**
+     * 
+     * @param conID contributorID
+     * @throws SQLException
+     */
     public static void updateContributors(String conID) throws SQLException{
         String query = "SELECT * FROM contributors WHERE contributorid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -251,7 +272,13 @@ public class Application {
         stmt.executeUpdate();
         System.out.println("UPDATE successfully completed");
     }
-
+    
+    /**
+     * 
+     * @param songid songID
+     * @throws SQLException
+     * @throws ParseException
+     */
     public static void updateDistribution(String songid) throws SQLException, ParseException{
         String query = "SELECT * FROM distribution WHERE songid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -290,6 +317,11 @@ public class Application {
         System.out.println("UPDATE successfully completed");
     }
 
+    /**
+     * 
+     * @param marketid marketID
+     * @throws SQLException
+     */
     public static void updateMarkets(String marketid) throws SQLException{
         String query = "SELECT * FROM markets WHERE marketid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -314,6 +346,11 @@ public class Application {
         System.out.println("UPDATE successfully completed");
     }
 
+    /**
+     * 
+     * @param rid roleID
+     * @throws SQLException
+     */
     public static void updateRecordLabel(String rid) throws SQLException{
         String query = "SELECT * FROM recordlabel WHERE recordlabelid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -338,6 +375,11 @@ public class Application {
         System.out.println("UPDATE successfully completed");
     }
 
+    /**
+     * 
+     * @param roid roleID
+     * @throws SQLException
+     */
     public static void updateRoles(String roid) throws SQLException{
         String query = "SELECT * FROM roles WHERE roleid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -362,6 +404,12 @@ public class Application {
         System.out.println("UPDATE successfully completed");
     }
 
+    /**
+     * 
+     * @param sid songID
+     * @throws SQLException
+     * @throws ParseException
+     */
     public static void updateSong(String sid) throws SQLException, ParseException{
         String query = "SELECT * FROM song WHERE songid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -391,6 +439,10 @@ public class Application {
         System.out.println("UPDATE successfully completed");
     }
 
+    /**
+     * 
+     * @throws SQLException
+     */
     public static void initComponents() throws SQLException{
         String query = "SELECT * FROM components";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -414,6 +466,10 @@ public class Application {
         //return comp;
     }
 
+    /**
+     * 
+     * @throws SQLException
+     */
     public static void initContributors() throws SQLException{
         String query = "SELECT * FROM contributors";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -429,6 +485,10 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @throws SQLException
+     */
     public static void initDistribution() throws SQLException{
         String query = "SELECT * FROM distribution";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -447,6 +507,10 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @throws SQLException
+     */
     public static void initMarkets() throws SQLException{
         System.out.println("working");
         String query = "SELECT * FROM markets";
@@ -465,6 +529,10 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @throws SQLException
+     */
     public static void initRecordLabel() throws SQLException{
         String query = "SELECT * FROM recordlabel";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -480,6 +548,10 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @throws SQLException
+     */
     public static void initRoles() throws SQLException{
         String query = "SELECT * FROM roles";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -495,6 +567,10 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @throws SQLException
+     */
     public static void initSong() throws SQLException{
         String query = "SELECT * FROM song";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -526,6 +602,10 @@ public class Application {
 
     }
 
+    /**
+     * 
+     * @throws SQLException
+     */
     public static void insertComponents() throws SQLException{
         String query = "INSERT INTO components(componentid,songid,offsetcomponent,durationcomponent,songused,offsetsong,durationsong) VALUES('COM' || componentSeq.nextval,?,?,?,?,?,?)";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -554,6 +634,10 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @throws SQLException
+     */
     public static void insertContributors() throws SQLException{
         String query = "INSERT INTO contributors(contributorid,fullname) VALUES('CO' || contributorSeq.nextval,?)";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -567,6 +651,11 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @throws SQLException
+     * @throws ParseException
+     */
     public static void insertDistribution() throws SQLException, ParseException{
         String query = "INSERT INTO distribution(songid,recordlabelid, marketid, distributiondate, songtitle) VALUES(?,?,?,?,?)";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -594,6 +683,10 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @throws SQLException
+     */
     public static void insertMarkets() throws SQLException{
         String query = "INSERT INTO markets(marketid, area) VALUES('M' || marketSeq.nextval,?)";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -608,6 +701,10 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @throws SQLException
+     */
     public static void insertRecordLabel() throws SQLException{
         String query = "INSERT INTO recordlabel(recordlabelid, name) VALUES('RL' || recordlabelSeq.nextval,?)";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -622,6 +719,10 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @throws SQLException
+     */
     public static void insertRoles() throws SQLException{
         String query = "INSERT INTO roles(roleid,rolename) VALUES('RO' || rolesSeq.nextval,?)";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -636,6 +737,11 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @throws SQLException
+     * @throws ParseException
+     */
     public static void insertSong() throws SQLException, ParseException{
         String query = "INSERT INTO song(songid, releasedate, duration) VALUES('S' || songSeq.nextval,?, ?)";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -654,6 +760,11 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @throws SQLException
+     * @throws ParseException
+     */
     public static void insertRolesConSong() throws SQLException, ParseException{
         String query = "INSERT INTO rolesconsong(songid, contributorid, marketid) VALUES(? ,?, ?)";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -674,6 +785,11 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @param comId componentID
+     * @throws SQLException
+     */
     public static void deleteComponent(String comId) throws SQLException{
         String query = "SELECT * FROM components WHERE componentid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -697,6 +813,11 @@ public class Application {
         System.out.println("DELETE successfully completed");
     } 
 
+    /**
+     * 
+     * @param conID contributorID
+     * @throws SQLException
+     */
     public static void deleteContributors(String conID) throws SQLException{
         String query = "SELECT * FROM contributors WHERE contributorid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -716,6 +837,11 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @param songid songID
+     * @throws SQLException
+     */
     public static void deleteDistribution(String songid) throws SQLException{
         String query = "SELECT * FROM distribution WHERE songid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -739,6 +865,11 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @param mID marketID
+     * @throws SQLException
+     */
     public static void deleteMarket(String mID) throws SQLException{
         String query = "SELECT * FROM markets WHERE marketid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -759,6 +890,11 @@ public class Application {
         System.out.println("Delete successfully completed");
     }
 
+    /**
+     * 
+     * @param rid roleID
+     * @throws SQLException
+     */
     public static void deleteRecordLabel(String rid) throws SQLException{
         String query = "SELECT * FROM recordlabel WHERE recordlabelid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -779,6 +915,11 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @param roid roleID
+     * @throws SQLException
+     */
     public static void deleteRole(String roid) throws SQLException{
         String query = "SELECT * FROM roles WHERE roleid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -799,6 +940,11 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @param sid songID
+     * @throws SQLException
+     */
     public static void deleteSongs(String sid) throws SQLException{
         String query = "SELECT * FROM song WHERE songid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -820,6 +966,12 @@ public class Application {
         stmt.close();
     }
 
+    /**
+     * 
+     * @param comID componentID
+     * @return List of Songs
+     * @throws SQLException
+     */
     public static List<Song> getSongsComponent(String comID) throws SQLException{
         String query = "SELECT * FROM song INNER JOIN components USING (songid) WHERE componentid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -836,6 +988,12 @@ public class Application {
         return songs;
     }
 
+    /**
+     * 
+     * @param comID componentID
+     * @return List of contributors
+     * @throws SQLException
+     */
     public static List<Contributors> getContributorsComponent(String comID) throws SQLException{
         String query = "SELECT * FROM contributors INNER JOIN rolesconsong USING (contributorid) INNER JOIN song USING (songid) INNER JOIN components USING (songid) WHERE componentid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -852,6 +1010,12 @@ public class Application {
         return contributors;
     }
 
+    /**
+     * 
+     * @param comID componentID
+     * @return List of Roles
+     * @throws SQLException
+     */
     public static List<Roles> getRolesComponent(String comID) throws SQLException{
         String query = "SELECT * FROM roles INNER JOIN rolesconsong USING (roleid) INNER JOIN song USING (songid) INNER JOIN components USING (songid) WHERE componentid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -868,6 +1032,12 @@ public class Application {
         return roles;
     }
 
+    /**
+     * 
+     * @param comID componentID
+     * @return List of Components
+     * @throws SQLException
+     */
     public static List<Components> getComponentsComponent(String comID) throws SQLException{
         String query = "SELECT * FROM components WHERE componentid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -884,6 +1054,12 @@ public class Application {
         return components;
     }
 
+    /**
+     * 
+     * @param songID songID
+     * @return List of Songs
+     * @throws SQLException
+     */
     public static List<Song> getSongsSong(String songID) throws SQLException{
         String query = "SELECT * FROM song WHERE songid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -900,6 +1076,12 @@ public class Application {
         return songs;
     }
 
+    /**
+     * 
+     * @param songID songID
+     * @return List of Contributors
+     * @throws SQLException
+     */
     public static List<Contributors> getContributorsSong(String songID) throws SQLException{
         String query = "SELECT * FROM contributors INNER JOIN rolesconsong USING (contributorid) WHERE songid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -916,6 +1098,12 @@ public class Application {
         return contributors;
     }
 
+    /**
+     * 
+     * @param songID songID
+     * @return List of Roles
+     * @throws SQLException
+     */
     public static List<Roles> getRolesSong(String songID) throws SQLException{
         String query = "SELECT * FROM roles INNER JOIN rolesconsong USING(roleid) WHERE songid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -932,6 +1120,12 @@ public class Application {
         return roles;
     }
 
+    /**
+     * 
+     * @param songID songID
+     * @return List of Components
+     * @throws SQLException
+     */
     public static List<Components> getComponentsSong(String songID) throws SQLException{
         String query = "SELECT * FROM components INNER JOIN song USING (songid) WHERE songid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -947,6 +1141,12 @@ public class Application {
         return components;
     }
 
+    /**
+     * 
+     * @param rlID roleID
+     * @return List of Distributions
+     * @throws SQLException
+     */
     public static List<Distribution> getDistributionsRecordLabel(String rlID) throws SQLException{
         String query = "SELECT * FROM distribution INNER JOIN recordlabel USING (recordlabelid) WHERE recordlabelid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -962,6 +1162,12 @@ public class Application {
         return distributions;
     }
 
+    /**
+     * 
+     * @param mID marketID
+     * @return List of Distributions
+     * @throws SQLException
+     */
     public static List<Distribution> getDistributionsMarket(String mID) throws SQLException{
         String query = "SELECT * FROM distribution INNER JOIN markets USING (marketid) WHERE marketid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
