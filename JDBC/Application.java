@@ -165,8 +165,6 @@ public class Application {
             System.out.println("4 -- search contributions and roles that an artist has had");
             System.out.println("5 -- show roles of an artist");
         }
-        //updateAuditLog();
-
     }
 
     public static void getConnection(String username, String password) throws SQLException{
@@ -181,7 +179,7 @@ public class Application {
     public static void updateAuditLog(String info) throws SQLException{
         Date date = new Date(System.currentTimeMillis());
         
-        String query = "INSERT INTO AUDITLOG(username, information, dateinfo) VALUES(?,?,?)";
+        String query = "INSERT INTO AUDITLOG(changeid,username, information, dateinfo) VALUES(auditlogSeq.nextVal,?,?,?)";
         PreparedStatement stmt = con.prepareStatement(query);
         stmt.setString(1, username);
         stmt.setString(2, info);
@@ -219,7 +217,7 @@ public class Application {
         int os = s.nextInt();        
         System.out.println("ENTER durationSong:");
         int ds = s.nextInt();
-        String q2 = "UPDATE components SET songId = ?, offsetcomponent = ?, durationcomponent = ?, songused = ?, offsetsong = ?, durationsong = ?";
+        String q2 = "UPDATE components SET songId = ?, offsetcomponent = ?, durationcomponent = ?, songused = ?, offsetsong = ?, durationsong = ? WHERE componentid = ?";
         stmt = con.prepareStatement(q2);
         stmt.setString(1, sId);
         stmt.setInt(2, osc);
@@ -227,6 +225,7 @@ public class Application {
         stmt.setString(4, su);
         stmt.setInt(5, os);
         stmt.setInt(6, ds);
+        stmt.setString(7, comId);
         stmt.executeUpdate();
         System.out.println("UPDATE successfully completed");
     } 
@@ -246,10 +245,11 @@ public class Application {
         Scanner s = new Scanner(System.in);
         System.out.println("ENTER fullName:");
         String fullname = s.nextLine();
-        String q2 = "UPDATE contributors SET contributorid = ?, fullname = ?";
+        String q2 = "UPDATE contributors SET contributorid = ?, fullname = ? WHERE contributorid = ?";
         stmt = con.prepareStatement(q2);
         stmt.setString(1, conID);
         stmt.setString(2, fullname);
+        stmt.setString(3, conID);
         stmt.executeUpdate();
         System.out.println("UPDATE successfully completed");
     }
@@ -280,13 +280,14 @@ public class Application {
         
         System.out.println("ENTER song title:");
         String title = s.nextLine();
-        String q2 = "UPDATE distribution SET songid = ?, recordlabelid = ?, marketid = ?, distributiondate = ?, songtitle = ?";
+        String q2 = "UPDATE distribution SET songid = ?, recordlabelid = ?, marketid = ?, distributiondate = ?, songtitle = ? WHERE songid = ?";
         stmt = con.prepareStatement(q2);
         stmt.setString(1, songid);
         stmt.setString(2, rid);
         stmt.setString(3, mid);
         stmt.setDate(4, date);
         stmt.setString(5, title);
+        stmt.setString(6, songid);
         stmt.executeUpdate();
         System.out.println("UPDATE successfully completed");
     }
@@ -299,17 +300,19 @@ public class Application {
         rs.next();
         String marketId = rs.getString("marketid");
         String area = rs.getString("area");
-        Markets m = new Markets(marketId, area);
+        Markets m = new Markets(marketId, area, getDistributionsMarket(marketid));
         System.out.println(1+" -- "+m);
         stmt.close();
         Scanner s = new Scanner(System.in);
-        System.out.println("ENTER area:");
+        System.out.println("ENTER new area:");
         String area1 = s.nextLine();
         
-        String q2 = "UPDATE markets SET area = ?";
+        String q2 = "UPDATE markets SET area = ? WHERE marketid = ?";
         stmt = con.prepareStatement(q2);
         stmt.setString(1, area1);
+        stmt.setString(2, marketid);
         stmt.executeUpdate();
+        stmt.close();
         System.out.println("UPDATE successfully completed");
     }
 
@@ -328,10 +331,11 @@ public class Application {
         System.out.println("ENTER Name:");
         String name = s.nextLine();
         
-        String q2 = "UPDATE recordlabel SET recordlabelid = ?, name = ?";
+        String q2 = "UPDATE recordlabel SET recordlabelid = ?, name = ? WHERE recordlabelid = ?";
         stmt = con.prepareStatement(q2);
         stmt.setString(1, rid);
         stmt.setString(2, name);
+        stmt.setString(3, rid);
         stmt.executeUpdate();
         System.out.println("UPDATE successfully completed");
     }
@@ -351,10 +355,11 @@ public class Application {
         System.out.println("ENTER RoleName:");
         String name1 = s.nextLine();
         
-        String q2 = "UPDATE roles SET roleid = ?, rolename = ?";
+        String q2 = "UPDATE roles SET roleid = ?, rolename = ? WHERE roleid = ?";
         stmt = con.prepareStatement(q2);
         stmt.setString(1, roid);
         stmt.setString(2, name1);
+        stmt.setString(3, roid);
         stmt.executeUpdate();
         System.out.println("UPDATE successfully completed");
     }
@@ -378,11 +383,12 @@ public class Application {
         System.out.println("ENTER Duration:");
         int duration = s.nextInt();
         
-        String q2 = "UPDATE song SET songid = ?, releasedate = ?, duration = ?";
+        String q2 = "UPDATE song SET songid = ?, releasedate = ?, duration = ? WHERE songid = ?";
         stmt = con.prepareStatement(q2);
         stmt.setString(1, sid);
         stmt.setDate(2, date);
         stmt.setInt(3,duration);
+        stmt.setString(4, sid);
         stmt.executeUpdate();
         System.out.println("UPDATE successfully completed");
     }
@@ -453,7 +459,7 @@ public class Application {
             i++;
             String marketId = rs.getString("marketid");
             String area = rs.getString("area");
-            Markets m = new Markets(marketId, area);
+            Markets m = new Markets(marketId, area, getDistributionsMarket(marketId));
             System.out.println(i+" -- "+m);
         }
         rs.close();
@@ -619,7 +625,6 @@ public class Application {
         stmt.executeUpdate();
         System.out.println("INSERT successfully completed");
         stmt.close();
-        updateAuditLog("INSERTED into markets table");
     }
 
     public static void insertRecordLabel() throws SQLException{
@@ -741,8 +746,8 @@ public class Application {
         rs.next();
         String marketid = rs.getString("marketid");
         String area = rs.getString("area");
-        Markets market = new Markets(marketid, area);
-        System.out.println(1+" -- "+market);
+        Markets m = new Markets(marketid, area, getDistributionsMarket(marketid));
+        System.out.println(1+" -- "+m);
         stmt.close();
         
         String q2 = "DELETE FROM markets WHERE marketid = ?";
