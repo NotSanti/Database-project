@@ -7,10 +7,10 @@ public class RecordLabel {
     protected String name;
     protected List<Distribution> distributions;
     
-    public RecordLabel(String recordLabelId, String name) {
+    public RecordLabel(String recordLabelId, String name, List<Distribution> distributions) {
         this.recordLabelId = recordLabelId;
         this.name = name;
-        //this.distributions = distributions;
+        this.distributions = distributions;
     }
 
     @Override
@@ -19,4 +19,17 @@ public class RecordLabel {
         return ("|| RecordLabelID: "+ this.recordLabelId+" || "+
         "Name: "+this.name+" || " + "\n");
     }
+
+    public String getRecordLabelId() {
+        return recordLabelId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Distribution> getDistributions() {
+        return distributions;
+    }
+    
 }

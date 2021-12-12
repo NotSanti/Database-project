@@ -11,12 +11,13 @@ public class Distribution{
     protected String songTitle;
     protected List<Song> songs;
    
-    public Distribution(String songId, String recordLabelId, Date releaseDate, String marketId, String songTitle) {
+    public Distribution(String songId, String recordLabelId, String marketId, Date releaseDate, String songTitle, List<Song> songs) {
         this.songId = songId;
         this.recordLabelId = recordLabelId;
-        this.releaseDate = releaseDate;
         this.marketId = marketId;
+        this.releaseDate = releaseDate;
         this.songTitle = songTitle;
+        this.songs = songs;
     }
 
     @Override
@@ -28,4 +29,29 @@ public class Distribution{
         + "marketID: "+this.marketId+ "|| " 
         + "songTitle: "+ this.songTitle+ "||"+ "\n");
     }
+
+    public String getSongId() {
+        return songId;
+    }
+
+    public String getRecordLabelId() {
+        return recordLabelId;
+    }
+
+    public String getMarketId() {
+        return marketId;
+    }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public String getSongTitle() {
+        return songTitle;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
+    }
+    
 }

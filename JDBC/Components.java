@@ -10,10 +10,10 @@ public class Components {
     protected String componentNum;
     protected int offsetSong;
     protected int durationSong;
-    //protected List<Song> songs;
+    protected List<Song> songs;
 
     public Components(String componentId, String songId, int offsetComponent, int durationComponent,
-            String componentNum, int offsetSong, int durationSong) {
+            String componentNum, int offsetSong, int durationSong,List<Song> songs) {
         this.componentId = componentId;
         this.songId = songId;
         this.offsetComponent = offsetComponent;
@@ -21,7 +21,7 @@ public class Components {
         this.componentNum = componentNum;
         this.offsetSong = offsetSong;
         this.durationSong = durationSong;
-        //this.songs = songs;
+        this.songs = songs;
     }
 
     @Override
@@ -31,4 +31,33 @@ public class Components {
         " || durationComponent: "+this.durationComponent+" || componentNum: "+this.componentNum+"|| durationSong: "
         + this.durationSong+" ||"+"\n");
     }
+
+    public String getComponentId() {
+        return componentId;
+    }
+
+    public String getSongId() {
+        return songId;
+    }
+
+    public int getOffsetComponent() {
+        return offsetComponent;
+    }
+
+    public int getDurationComponent() {
+        return durationComponent;
+    }
+
+    public String getComponentNum() {
+        return componentNum;
+    }
+
+    public int getOffsetSong() {
+        return offsetSong;
+    }
+
+    public int getDurationSong() {
+        return durationSong;
+    }
+    
 }
