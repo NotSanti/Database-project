@@ -29,4 +29,29 @@ public class Distribution{
         + "marketID: "+this.marketId+ "|| " 
         + "songTitle: "+ this.songTitle+ "||"+ "\n");
     }
+
+    public String getSongId() {
+        return songId;
+    }
+
+    public String getRecordLabelId() {
+        return recordLabelId;
+    }
+
+    public String getMarketId() {
+        return marketId;
+    }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public String getSongTitle() {
+        return songTitle;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
+    }
+    
 }

@@ -12,4 +12,17 @@ public class AuditLog {
         this.date = date;
         this.info = info;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+    
 }

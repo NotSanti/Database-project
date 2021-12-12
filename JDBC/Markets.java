@@ -19,4 +19,17 @@ public class Markets {
         return ("|| marketID: "+ this.marketId+" || "
         +"Area: "+ this.area+ "||"+"\n");
     }
+
+    public String getMarketId() {
+        return marketId;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public List<Distribution> getDistributions() {
+        return distributions;
+    }
+ 
 }

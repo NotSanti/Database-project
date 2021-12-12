@@ -31,4 +31,33 @@ public class Components {
         " || durationComponent: "+this.durationComponent+" || componentNum: "+this.componentNum+"|| durationSong: "
         + this.durationSong+" ||"+"\n");
     }
+
+    public String getComponentId() {
+        return componentId;
+    }
+
+    public String getSongId() {
+        return songId;
+    }
+
+    public int getOffsetComponent() {
+        return offsetComponent;
+    }
+
+    public int getDurationComponent() {
+        return durationComponent;
+    }
+
+    public String getComponentNum() {
+        return componentNum;
+    }
+
+    public int getOffsetSong() {
+        return offsetSong;
+    }
+
+    public int getDurationSong() {
+        return durationSong;
+    }
+    
 }
