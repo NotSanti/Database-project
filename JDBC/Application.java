@@ -7,22 +7,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
-import java.util.zip.DataFormatException;
-
-import javax.management.relation.RelationException;
-import javax.management.relation.Role;
-import javax.naming.spi.DirStateFactory.Result;
 
 public class Application {
     
