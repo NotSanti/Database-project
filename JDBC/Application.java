@@ -851,7 +851,7 @@ public class Application {
         ResultSet rs = stmt.executeQuery();
         List<Components> components = new ArrayList<>();
         while(rs.next()){
-            Components component = new Components(rs.getString("componentid"), rs.getString("songid"), rs.getInt("offsetcomponent"), rs.getInt("durationcomponent"), rs.getString("songused"), rs.getInt("offsetsong"), rs.getInt("durationsong"), getSongsComponent(comID));
+            Components component = new Components(rs.getString("componentid"), rs.getString("songid"), rs.getInt("offsetcomponent"), rs.getInt("durationcomponent"), rs.getString("songused"), rs.getInt("offsetsong"), rs.getInt("durationsong"), getSongsSong(rs.getString("songused")));
             components.add(component);
         }
         stmt.close();
@@ -907,7 +907,7 @@ public class Application {
         ResultSet rs = stmt.executeQuery();
         List<Components> components = new ArrayList<>();
         while(rs.next()){
-            Components component = new Components(rs.getString("componentid"), rs.getString("songid"), rs.getInt("offsetcomponent"), rs.getInt("durationcomponent"), rs.getString("songused"), rs.getInt("offsetsong"), rs.getInt("durationsong"), getSongsSong(songID));
+            Components component = new Components(rs.getString("componentid"), rs.getString("songid"), rs.getInt("offsetcomponent"), rs.getInt("durationcomponent"), rs.getString("songused"), rs.getInt("offsetsong"), rs.getInt("durationsong"), getSongsSong(rs.getString("songused")));
             components.add(component);
         }
         stmt.close();
