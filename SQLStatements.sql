@@ -20,19 +20,26 @@ BEGIN
     dbms_output.put_line('Roles: ' || allroles(i));
     END LOOP;
 END showContributorsForSong;
-
+-- test
 EXECUTE showContributorsForSong('S10002');
 
 
 -- Show all details of a recording/compilation
 
-SELECT *
-FROM components
-INNER JOIN song
-USING(songid);
-
- 
-
+--should check if a song is a compilation and show its inormation in that case
+CREATE OR REPLACE PROCEDURE showInfo(vsong IN song.songid%TYPE)
+AS
+    vsongid song.songid%TYPE;
+    vreldate distribution.distributiondate%TYPE;
+    vduration song.duration%TYPE;
+   
+BEGIN
+    SELECT * into vsongid,vreldate,vduration FROM song
+    WHERE songid = vsong;
+    dbms_output.put_line('songid: '||vsongid||' --- Release Date: '||vreldate || ' --- Duration: '|| vduration||'s');
+END showInfo;
+--test
+EXECUTE showinfo('S10031');
 -- show all recoridng/compilatiosn a contributor may have been in and their role
 
 CREATE OR REPLACE PROCEDURE showRoles (conID IN contributors.contributorid%TYPE)
@@ -53,17 +60,5 @@ BEGIN
     END LOOP;
     
 END showRoles;
-
+--test
 EXECUTE showRoles('CO1165');
-
-SELECT s.songid, r.rolename FROM Contributors c
-    INNER JOIN RolesConSong rcs ON c.contributorid = rcs.contributorid
-    INNER JOIN Roles r ON rcs.roleid = r.roleid
-    INNER JOIN Song s ON rcs.songid = s.songid
-    WHERE rcs.contributorid = 'CO1165';
-    
-SELECT s.songid, r.rolename FROM roles r
-INNER JOIN rolesconsong rcs ON r.roleid = rcs.roleid
-INNER JOIN contributors c ON rcs.contributorid = c.contributorid
-INNER JOIN song s ON rcs.songid = s.songid
-WHERE rcs.contributorid = 'CO1165';
