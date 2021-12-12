@@ -10,7 +10,8 @@ public class JDBCUnitTests {
     @Test
     void testAuditLog() {
         Date newDate = new Date(0);
-        AuditLog auditlog = new AuditLog("newuser", newDate, "information");
+        AuditLog auditlog = new AuditLog("A0001","newuser", newDate, "information");
+        assertEquals("A0001", auditlog.getAuditId());
         assertEquals("newuser", auditlog.getUsername());
         assertEquals(newDate, auditlog.getDate());
         assertEquals("information", auditlog.getInfo());
