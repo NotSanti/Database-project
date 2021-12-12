@@ -1,5 +1,9 @@
 package JDBC;
-
+/**
+ * @author Santiago Luna
+ * @author Matteo
+ * @author Oleks
+ */
 import java.io.Console;
 import java.sql.Connection;
 import java.sql.Date;
