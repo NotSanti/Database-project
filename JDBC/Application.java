@@ -26,7 +26,7 @@ public class Application {
 
         Console console = System.console();
         String password = new String(console.readPassword("Enter Password: "));
-        getConnection(username , password );
+        getConnection(username = "A2032367", password ="SQL2021");
 
         System.out.println("Type the number of the choice");
         
@@ -60,12 +60,15 @@ public class Application {
                     System.out.println(" --- ENTER CONTRIBUTOR ID --- ");
                     String conID = s.nextLine();
                     updateContributors(conID);
+                    updateAuditLog("Updating contributor table");
                 }else if(choice.equals("2")){
                     insertContributors();
+                    updateAuditLog("Inserting into contributor table");
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER CONTRIBUTOR ID --- ");
                     String conID = s.nextLine();
                     deleteContributors(conID);
+                    updateAuditLog("Deleting from contributor table");
                 }
             } else if(table.equals("3")){
                 System.out.println(" --- DISTRIBUTIONS --- ");
@@ -74,12 +77,15 @@ public class Application {
                     System.out.println(" --- ENTER SONG ID --- ");
                     String songid = s.nextLine();
                     updateDistribution(songid);
+                    updateAuditLog("Updating Distributions table");
                 } else if(choice.equals("2")){
                     insertDistribution();
+                    updateAuditLog("Inserting into Distributions table");
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER SONG ID --- ");
                     String songID = s.nextLine();
                     deleteDistribution(songID);
+                    updateAuditLog("Deleting from Distributions table");
                 }
             } else if(table.equals("4")){
                 System.out.println(" --- MARKETS --- ");
@@ -88,12 +94,15 @@ public class Application {
                     System.out.println(" --- ENTER MARKET ID --- ");
                     String mid = s.nextLine();
                     updateMarkets(mid);
+                    updateAuditLog("Updating Markets table");
                 } else if(choice.equals("2")){
                     insertMarkets();
+                    updateAuditLog("Inserting into Markets table");
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER MARKET ID --- ");
                     String mID = s.nextLine();
                     deleteMarket(mID);
+                    updateAuditLog("Deleting from Markets table");
                 }
             } else if(table.equals("5")){
                 System.out.println(" --- RECORD LABELS --- ");
@@ -102,12 +111,15 @@ public class Application {
                     System.out.println(" --- ENTER RECORD LABEL ID --- ");
                     String rid = s.nextLine();
                     updateRecordLabel(rid);
+                    updateAuditLog("Updating RecordLabel table");
                 } else if(choice.equals("2")){
                     insertRecordLabel();
+                    updateAuditLog("Inserting into RecordLabel table");
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER RECORD LABEL ID --- ");
                     String riID = s.nextLine();
                     deleteRecordLabel(riID);
+                    updateAuditLog("Deleting from RecordLabel table");
                 }
             } else if(table.equals("6")){
                 System.out.println(" --- ROLES --- ");
@@ -116,12 +128,15 @@ public class Application {
                     System.out.println(" --- ENTER ROLE ID --- ");
                     String rid = s.nextLine();
                     updateRoles(rid);
+                    updateAuditLog("Updating Roles table");
                 } else if(choice.equals("2")){
                     insertRoles();
+                    updateAuditLog("Inserting into Roles table");
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER ROLE ID --- ");
                     String roleID = s.nextLine();
                     deleteRole(roleID);
+                    updateAuditLog("Deleting from Roles table");
                 }
             } else if(table.equals("7")){
                 System.out.println(" --- SONG --- ");
@@ -130,12 +145,15 @@ public class Application {
                     System.out.println(" --- ENTER SONG ID --- ");
                     String sid = s.nextLine();
                     updateSong(sid);
+                    updateAuditLog("Updating Song table");
                 } else if(choice.equals("2")){
                     insertSong();
+                    updateAuditLog("Inserting into Song table");
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER SONG ID --- ");
                     String sID = s.nextLine();
                     deleteSongs(sID);
+                    updateAuditLog("Deleting from Song table");
                 }
             } 
         } else if(choice.equals("4")){
@@ -152,10 +170,23 @@ public class Application {
 
     public static void getConnection(String username, String password) throws SQLException{
         System.out.println("connecting");
-        con = DriverManager.getConnection("jdbc:oracle:thin:@pdbora19c.dawsoncollege.qc.ca:1521/pdbora19c.dawsoncollege.qc.ca", username, password);
+        con = DriverManager.getConnection("jdbc:oracle:thin:@pdbora19c.dawsoncollege.qc.ca:1521/pdbora19c.dawsoncollege.qc.ca", username = "A2032367", password = "SQL2021");
+       
         if(con.isValid(1000)){
         System.out.println("Connected");
         }
+    }
+
+    public static void updateAuditLog(String info) throws SQLException{
+        Date date = new Date(System.currentTimeMillis());
+        
+        String query = "INSERT INTO AUDITLOG(username, information, dateinfo) VALUES(?,?,?)";
+        PreparedStatement stmt = con.prepareStatement(query);
+        stmt.setString(1, username);
+        stmt.setString(2, info);
+        stmt.setDate(3, date);
+        stmt.executeUpdate();
+        System.out.println("UPDATE successfully completed");
     }
 
     public static void updateComponents(String comId) throws SQLException{
@@ -274,10 +305,9 @@ public class Application {
         System.out.println("ENTER area:");
         String area1 = s.nextLine();
         
-        String q2 = "UPDATE markets SET marketid = ?, area = ?";
+        String q2 = "UPDATE markets SET area = ?";
         stmt = con.prepareStatement(q2);
-        stmt.setString(1, marketid);
-        stmt.setString(2, area1);
+        stmt.setString(1, area1);
         stmt.executeUpdate();
         System.out.println("UPDATE successfully completed");
     }
@@ -356,18 +386,6 @@ public class Application {
         System.out.println("UPDATE successfully completed");
     }
 
-    public static void updateAuditLog() throws SQLException{
-        Date date = new Date(System.currentTimeMillis());
-        
-        String query = "INSERT INTO AUDITLOG(username, dateinfo) VALUES(?,?)";
-        PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, username);
-        stmt.setDate(2, date);
-        //needs to give an explanation too
-        stmt.executeUpdate();
-        System.out.println("UPDATE successfully completed");
-    }
-
     public static void initComponents() throws SQLException{
         String query = "SELECT * FROM components";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -425,6 +443,7 @@ public class Application {
     }
 
     public static void initMarkets() throws SQLException{
+        System.out.println("working");
         String query = "SELECT * FROM markets";
         PreparedStatement stmt = con.prepareStatement(query);
         ResultSet rs = stmt.executeQuery();
@@ -436,6 +455,8 @@ public class Application {
             Markets m = new Markets(marketId, area, getDistributionsMarket(rs.getString("marketid")));
             System.out.println(i+" -- "+m);
         }
+        rs.close();
+
         stmt.close();
     }
 
@@ -586,7 +607,7 @@ public class Application {
     }
 
     public static void insertMarkets() throws SQLException{
-        String query = "INSERT INTO markets(marketid, area) VALUES('M' || marketSeq.nextval?)";
+        String query = "INSERT INTO markets(marketid, area) VALUES('M' || marketSeq.nextval,?)";
         PreparedStatement stmt = con.prepareStatement(query);
         
         Scanner s = new Scanner(System.in);
@@ -597,6 +618,7 @@ public class Application {
         stmt.executeUpdate();
         System.out.println("INSERT successfully completed");
         stmt.close();
+        updateAuditLog("INSERTED into markets table");
     }
 
     public static void insertRecordLabel() throws SQLException{
@@ -801,6 +823,8 @@ public class Application {
             Song song = new Song(rs.getString("songid"), rs.getDate("releasedate"), rs.getInt("duration"), getContributorsComponent(comID), getRolesComponent(comID), getComponentsComponent(comID));
             songs.add(song);
         }
+        rs.close();
+
         stmt.close();
         return songs;
     }
@@ -815,12 +839,14 @@ public class Application {
             Contributors contributor = new Contributors(rs.getString("contributorid"), rs.getString("fullname"));
             contributors.add(contributor);
         }
+        rs.close();
+
         stmt.close();
         return contributors;
     }
 
     public static List<Roles> getRolesComponent(String comID) throws SQLException{
-        String query = "SELECT * FROM roles INNER JOIN rolesconsong USING (contributorid) INNER JOIN song USING (songid) INNER JOIN components USING (songid) WHERE componentid = ?";
+        String query = "SELECT * FROM roles INNER JOIN rolesconsong USING (roleid) INNER JOIN song USING (songid) INNER JOIN components USING (songid) WHERE componentid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
         stmt.setString(1, comID);
         ResultSet rs = stmt.executeQuery();
@@ -829,6 +855,8 @@ public class Application {
             Roles role = new Roles(rs.getString("roleid"), rs.getString("rolename"));
             roles.add(role);
         }
+        rs.close();
+
         stmt.close();
         return roles;
     }
@@ -843,6 +871,8 @@ public class Application {
             Components component = new Components(rs.getString("componentid"), rs.getString("songid"), rs.getInt("offsetcomponent"), rs.getInt("durationcomponent"), rs.getString("songused"), rs.getInt("offsetsong"), rs.getInt("durationsong"), getSongsSong(rs.getString("songused")));
             components.add(component);
         }
+        rs.close();
+
         stmt.close();
         return components;
     }
@@ -857,6 +887,8 @@ public class Application {
             Song song = new Song(rs.getString("songid"), rs.getDate("releasedate"), rs.getInt("duration"), getContributorsSong(songID), getRolesSong(songID), getComponentsSong(songID));
             songs.add(song);
         }
+        rs.close();
+
         stmt.close();
         return songs;
     }
@@ -871,6 +903,8 @@ public class Application {
             Contributors contributor = new Contributors(rs.getString("contributorid"), rs.getString("fullname"));
             contributors.add(contributor);
         }
+        rs.close();
+
         stmt.close();
         return contributors;
     }
@@ -885,6 +919,8 @@ public class Application {
             Roles role = new Roles(rs.getString("roleid"), rs.getString("rolename"));
             roles.add(role);
         }
+        rs.close();
+
         stmt.close();
         return roles;
     }
@@ -899,6 +935,7 @@ public class Application {
             Components component = new Components(rs.getString("componentid"), rs.getString("songid"), rs.getInt("offsetcomponent"), rs.getInt("durationcomponent"), rs.getString("songused"), rs.getInt("offsetsong"), rs.getInt("durationsong"), getSongsSong(rs.getString("songused")));
             components.add(component);
         }
+        rs.close();
         stmt.close();
         return components;
     }
@@ -913,6 +950,7 @@ public class Application {
             Distribution distribution = new Distribution(rs.getString("songid"), rs.getString("recordlabelid"), rs.getString("marketid"), rs.getDate("distributiondate"), rs.getString("songtitle"), getSongsSong(rs.getString("songid")));
             distributions.add(distribution);
         }
+        rs.close();
         stmt.close();
         return distributions;
     }
@@ -927,6 +965,7 @@ public class Application {
             Distribution distribution = new Distribution(rs.getString("songid"), rs.getString("recordlabelid"), rs.getString("marketid"), rs.getDate("distributiondate"), rs.getString("songtitle"), getSongsSong(rs.getString("songid")));
             distributions.add(distribution);
         }
+        rs.close();
         stmt.close();
         return distributions;
     }
