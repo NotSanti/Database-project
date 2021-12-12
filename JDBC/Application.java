@@ -31,12 +31,13 @@ public class Application {
         Console console = System.console();
         String password = new String(console.readPassword("Enter Password: "));
         getConnection(username,password);
-
-        System.out.println("Type the number of the choice");
-        
+        boolean connected = true;
+        while(connected){
+            System.out.println("Type the number of the choice");
         System.out.println("1 -- UPDATE a table");
         System.out.println("2 -- INSERT a table");
         System.out.println("3 -- DELETE a table");
+        System.out.println("4 -- QUIT");
 
         String choice = s.nextLine();
         if(choice.equals("1") || choice.equals("2") || choice.equals("3")){
@@ -167,6 +168,12 @@ public class Application {
                 } 
             } 
         } 
+        if(choice.equals("4")){
+            System.out.println("Closing down");
+            connected = false;
+        }
+        }
+        
     }
 
     /**
