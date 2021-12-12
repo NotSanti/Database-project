@@ -10,10 +10,10 @@ public class Components {
     protected String componentNum;
     protected int offsetSong;
     protected int durationSong;
-    //protected List<Song> songs;
+    protected List<Song> songs;
 
     public Components(String componentId, String songId, int offsetComponent, int durationComponent,
-            String componentNum, int offsetSong, int durationSong) {
+            String componentNum, int offsetSong, int durationSong,List<Song> songs) {
         this.componentId = componentId;
         this.songId = songId;
         this.offsetComponent = offsetComponent;
@@ -21,7 +21,7 @@ public class Components {
         this.componentNum = componentNum;
         this.offsetSong = offsetSong;
         this.durationSong = durationSong;
-        //this.songs = songs;
+        this.songs = songs;
     }
 
     @Override

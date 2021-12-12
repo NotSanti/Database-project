@@ -11,12 +11,13 @@ public class Distribution{
     protected String songTitle;
     protected List<Song> songs;
    
-    public Distribution(String songId, String recordLabelId, Date releaseDate, String marketId, String songTitle) {
+    public Distribution(String songId, String recordLabelId, String marketId, Date releaseDate, String songTitle, List<Song> songs) {
         this.songId = songId;
         this.recordLabelId = recordLabelId;
-        this.releaseDate = releaseDate;
         this.marketId = marketId;
+        this.releaseDate = releaseDate;
         this.songTitle = songTitle;
+        this.songs = songs;
     }
 
     @Override
