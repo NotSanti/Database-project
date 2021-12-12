@@ -177,7 +177,7 @@ public class Application {
      */
     public static void getConnection(String username, String password) throws SQLException{
         System.out.println("connecting");
-        con = DriverManager.getConnection("jdbc:oracle:thin:@pdbora19c.dawsoncollege.qc.ca:1521/pdbora19c.dawsoncollege.qc.ca", username = "A2032367", password = "SQL2021");
+        con = DriverManager.getConnection("jdbc:oracle:thin:@pdbora19c.dawsoncollege.qc.ca:1521/pdbora19c.dawsoncollege.qc.ca", username, password);
        
         if(con.isValid(1000)){
         System.out.println("Connected");
