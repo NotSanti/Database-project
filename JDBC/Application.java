@@ -27,7 +27,7 @@ public class Application {
 
         Console console = System.console();
         String password = new String(console.readPassword("Enter Password: "));
-        getConnection(username , password );
+        getConnection(username = "A2032367", password ="SQL2021");
 
         System.out.println("Type the number of the choice");
         
@@ -61,12 +61,15 @@ public class Application {
                     System.out.println(" --- ENTER CONTRIBUTOR ID --- ");
                     String conID = s.nextLine();
                     updateContributors(conID);
+                    updateAuditLog("Updating contributor table");
                 }else if(choice.equals("2")){
                     insertContributors();
+                    updateAuditLog("Inserting into contributor table");
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER CONTRIBUTOR ID --- ");
                     String conID = s.nextLine();
                     deleteContributors(conID);
+                    updateAuditLog("Deleting from contributor table");
                 }
             } else if(table.equals("3")){
                 System.out.println(" --- DISTRIBUTIONS --- ");
@@ -75,12 +78,15 @@ public class Application {
                     System.out.println(" --- ENTER SONG ID --- ");
                     String songid = s.nextLine();
                     updateDistribution(songid);
+                    updateAuditLog("Updating Distributions table");
                 } else if(choice.equals("2")){
                     insertDistribution();
+                    updateAuditLog("Inserting into Distributions table");
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER SONG ID --- ");
                     String songID = s.nextLine();
                     deleteDistribution(songID);
+                    updateAuditLog("Deleting from Distributions table");
                 }
             } else if(table.equals("4")){
                 System.out.println(" --- MARKETS --- ");
@@ -89,12 +95,15 @@ public class Application {
                     System.out.println(" --- ENTER MARKET ID --- ");
                     String mid = s.nextLine();
                     updateMarkets(mid);
+                    updateAuditLog("Updating Markets table");
                 } else if(choice.equals("2")){
                     insertMarkets();
+                    updateAuditLog("Inserting into Markets table");
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER MARKET ID --- ");
                     String mID = s.nextLine();
                     deleteMarket(mID);
+                    updateAuditLog("Deleting from Markets table");
                 }
             } else if(table.equals("5")){
                 System.out.println(" --- RECORD LABELS --- ");
@@ -103,12 +112,15 @@ public class Application {
                     System.out.println(" --- ENTER RECORD LABEL ID --- ");
                     String rid = s.nextLine();
                     updateRecordLabel(rid);
+                    updateAuditLog("Updating RecordLabel table");
                 } else if(choice.equals("2")){
                     insertRecordLabel();
+                    updateAuditLog("Inserting into RecordLabel table");
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER RECORD LABEL ID --- ");
                     String riID = s.nextLine();
                     deleteRecordLabel(riID);
+                    updateAuditLog("Deleting from RecordLabel table");
                 }
             } else if(table.equals("6")){
                 System.out.println(" --- ROLES --- ");
@@ -117,12 +129,15 @@ public class Application {
                     System.out.println(" --- ENTER ROLE ID --- ");
                     String rid = s.nextLine();
                     updateRoles(rid);
+                    updateAuditLog("Updating Roles table");
                 } else if(choice.equals("2")){
                     insertRoles();
+                    updateAuditLog("Inserting into Roles table");
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER ROLE ID --- ");
                     String roleID = s.nextLine();
                     deleteRole(roleID);
+                    updateAuditLog("Deleting from Roles table");
                 }
             } else if(table.equals("7")){
                 System.out.println(" --- SONG --- ");
@@ -131,12 +146,15 @@ public class Application {
                     System.out.println(" --- ENTER SONG ID --- ");
                     String sid = s.nextLine();
                     updateSong(sid);
+                    updateAuditLog("Updating Song table");
                 } else if(choice.equals("2")){
                     insertSong();
+                    updateAuditLog("Inserting into Song table");
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER SONG ID --- ");
                     String sID = s.nextLine();
                     deleteSongs(sID);
+                    updateAuditLog("Deleting from Song table");
                 }
             } 
         } else if(choice.equals("4")){
@@ -288,10 +306,9 @@ public class Application {
         System.out.println("ENTER area:");
         String area1 = s.nextLine();
         
-        String q2 = "UPDATE markets SET marketid = ?, area = ?";
+        String q2 = "UPDATE markets SET area = ?";
         stmt = con.prepareStatement(q2);
-        stmt.setString(1, marketid);
-        stmt.setString(2, area1);
+        stmt.setString(1, area1);
         stmt.executeUpdate();
         System.out.println("UPDATE successfully completed");
     }
@@ -591,7 +608,7 @@ public class Application {
     }
 
     public static void insertMarkets() throws SQLException{
-        String query = "INSERT INTO markets(marketid, area) VALUES('M' || marketSeq.nextval?)";
+        String query = "INSERT INTO markets(marketid, area) VALUES('M' || marketSeq.nextval,?)";
         PreparedStatement stmt = con.prepareStatement(query);
         
         Scanner s = new Scanner(System.in);
@@ -602,6 +619,7 @@ public class Application {
         stmt.executeUpdate();
         System.out.println("INSERT successfully completed");
         stmt.close();
+        updateAuditLog("INSERTED into markets table");
     }
 
     public static void insertRecordLabel() throws SQLException{
