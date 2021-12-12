@@ -523,7 +523,7 @@ public class Application {
     }
 
     public static void insertComponents() throws SQLException{
-        String query = "INSERT INTO components(songid,offsetcomponent,durationcomponent,songused,offsetsong,durationsong) VALUES(?,?,?,?,?,?)";
+        String query = "INSERT INTO components(componentid,songid,offsetcomponent,durationcomponent,songused,offsetsong,durationsong) VALUES('COM' || componentSeq.nextval,?,?,?,?,?,?)";
         PreparedStatement stmt = con.prepareStatement(query);
         
         Scanner s = new Scanner(System.in);
@@ -551,7 +551,7 @@ public class Application {
     }
 
     public static void insertContributors() throws SQLException{
-        String query = "INSERT INTO contributors(fullname) VALUES(?)";
+        String query = "INSERT INTO contributors(contributorid,fullname) VALUES('CO' || contributorSeq.nextval,?)";
         PreparedStatement stmt = con.prepareStatement(query);
         
         Scanner s = new Scanner(System.in);
@@ -564,10 +564,12 @@ public class Application {
     }
 
     public static void insertDistribution() throws SQLException, ParseException{
-        String query = "INSERT INTO distribution(recordlabelid, marketid, distributiondate, songtitle) VALUES(?,?,?,?)";
+        String query = "INSERT INTO distribution(songid,recordlabelid, marketid, distributiondate, songtitle) VALUES(?,?,?,?,?)";
         PreparedStatement stmt = con.prepareStatement(query);
         
         Scanner s = new Scanner(System.in);
+        System.out.println("ENTER SongID:");
+        String sid = s.nextLine();
         System.out.println("ENTER recordLabelID:");
         String rid = s.nextLine();
         System.out.println("ENTER marketID:");
@@ -578,17 +580,18 @@ public class Application {
         System.out.println("ENTER song title:");
         String title = s.nextLine();
        
-        stmt.setString(1, rid);
-        stmt.setString(2, mid);
-        stmt.setDate(3, date);
-        stmt.setString(4, title);
+        stmt.setString(1, sid);
+        stmt.setString(2, rid);
+        stmt.setString(3, mid);
+        stmt.setDate(4, date);
+        stmt.setString(5, title);
         stmt.executeUpdate();
         System.out.println("INSERT successfully completed");
         stmt.close();
     }
 
     public static void insertMarkets() throws SQLException{
-        String query = "INSERT INTO markets(area) VALUES(?)";
+        String query = "INSERT INTO markets(marketid, area) VALUES('M' || marketSeq.nextval?)";
         PreparedStatement stmt = con.prepareStatement(query);
         
         Scanner s = new Scanner(System.in);
@@ -602,7 +605,7 @@ public class Application {
     }
 
     public static void insertRecordLabel() throws SQLException{
-        String query = "INSERT INTO recordlabel(name) VALUES(?)";
+        String query = "INSERT INTO recordlabel(recordlabelid, name) VALUES('RL' || recordlabelSeq.nextval,?)";
         PreparedStatement stmt = con.prepareStatement(query);
         
         Scanner s = new Scanner(System.in);
@@ -616,7 +619,7 @@ public class Application {
     }
 
     public static void insertRoles() throws SQLException{
-        String query = "INSERT INTO roles(rolename) VALUES(?)";
+        String query = "INSERT INTO roles(roleid,rolename) VALUES('RO' || rolesSeq.nextval,?)";
         PreparedStatement stmt = con.prepareStatement(query);
         
         Scanner s = new Scanner(System.in);
@@ -630,7 +633,7 @@ public class Application {
     }
 
     public static void insertSong() throws SQLException, ParseException{
-        String query = "INSERT INTO song(releasedate, duration) VALUES(?, ?)";
+        String query = "INSERT INTO song(songid, releasedate, duration) VALUES('S' || songSeq.nextval,?, ?)";
         PreparedStatement stmt = con.prepareStatement(query);
         
         Scanner s = new Scanner(System.in);
