@@ -39,5 +39,11 @@ public class Song {
     public List<Components> getComponents() {
         return components;
     }
+
+    @Override
+    public String toString() {
+        return "Song [components=" + components + ", contributors=" + contributors + ", duration=" + duration
+                + ", releaseDate=" + releaseDate + ", roles=" + roles + ", songId=" + songId + "]";
+    }
     
 }
