@@ -58,57 +58,42 @@ public class Application {
                 } else if(choice.equals("3")){
                     System.out.println(" --- ENTER COMPONENT ID --- ");
                     String comId = s.nextLine();
-                    deleteComponents(comId);
+                    //deleteComponent(comId);
                 }
             } else if(table.equals("2")){
                 System.out.println(" --- CONTRIBUTORS --- ");
                 initContributors();
                 if(choice.equals("1")){
-                    System.out.println(" --- ENTER CONTRIBUTOR ID(ex.CO0001) --- ");
+                    System.out.println(" --- ENTER CONTRIBUTORID(ex.CO0001) --- ");
                     String conID = s.nextLine();
                     updateContributors(conID);
                 }
                 if(choice.equals("2")){
                     insertContributors();
                 }
-                if(choice.equals("3")){
-                    System.out.println(" --- ENTER CONTRIBUTOR ID(ex.CO0001) --- ");
-                    String conID = s.nextLine();
-                    deleteContributors(conID);
-                }
             }
             if(table.equals("3")){
                 System.out.println(" --- DISTRIBUTIONS --- ");
                 initDistribution();
                 if(choice.equals("1")){
-                    System.out.println(" --- ENTER SONG ID(ex.S10025) --- ");
+                    System.out.println(" --- ENTER SONGID(ex.S10025) --- ");
                     String songid = s.nextLine();
                     updateDistribution(songid);
                 }
                 if(choice.equals("2")){
                     insertDistribution();
                 }
-                if(choice.equals("3")){
-                    System.out.println(" --- ENTER SONG ID(ex.S10025) --- ");
-                    String songid = s.nextLine();
-                    deleteDistributions(songid);
-                }
             }
             if(table.equals("4")){
                 System.out.println(" --- MARKETS --- ");
                 initMarkets();
                 if(choice.equals("1")){
-                    System.out.println(" --- ENTER MARKET ID --- ");
+                    System.out.println(" --- ENTER MARKETID --- ");
                     String mid = s.nextLine();
                     updateMarkets(mid);
                 }
                 if(choice.equals("2")){
                     insertMarkets();
-                }
-                if(choice.equals("3")){
-                    System.out.println(" --- ENTER MARKET ID --- ");
-                    String mid = s.nextLine();
-                    deleteMarkets(mid);
                 }
             }
             if(table.equals("5")){
@@ -122,11 +107,6 @@ public class Application {
                 if(choice.equals("2")){
                     insertRecordLabel();
                 }
-                if(choice.equals("3")){
-                    System.out.println(" --- ENTER RECORD LABEL ID --- ");
-                    String rid = s.nextLine();
-                    deleteRecordLabel(rid);
-                }
             }
             if(table.equals("6")){
                 System.out.println(" --- ROLES --- ");
@@ -138,11 +118,6 @@ public class Application {
                 }
                 if(choice.equals("2")){
                     insertRoles();
-                }
-                if(choice.equals("3")){
-                    System.out.println(" --- ENTER ROLE ID --- ");
-                    String rid = s.nextLine();
-                    deleteRoles(rid);
                 }
             }
         }
@@ -628,51 +603,4 @@ public class Application {
         stmt.setString(2, name);
     }
 
-    public static void deleteComponents(String comId) throws SQLException{
-        String query = "DELETE FROM components WHERE componentid = ?";
-        PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, comId);
-        stmt.executeUpdate();
-        System.out.println("DELETE successfully completed");
-    }
-
-    public static void deleteContributors(String conId) throws SQLException{
-        String query = "DELETE FROM contributors WHERE contributorid = ?";
-        PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, conId);
-        stmt.executeUpdate();
-        System.out.println("DELETE successfully completed");
-    }
-
-    public static void deleteDistributions(String songId) throws SQLException{
-        String query = "DELETE FROM distributions WHERE songid = ?";
-        PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, songId);
-        stmt.executeUpdate();
-        System.out.println("DELETE successfully completed");
-    }
-
-    public static void deleteMarkets(String mid) throws SQLException{
-        String query = "DELETE FROM markets WHERE marketid = ?";
-        PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, mid);
-        stmt.executeUpdate();
-        System.out.println("DELETE successfully completed");
-    }
-
-    public static void deleteRecordLabel(String rid) throws SQLException{
-        String query = "DELETE FROM recordlabel WHERE recordlabelid = ?";
-        PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, rid);
-        stmt.executeUpdate();
-        System.out.println("DELETE successfully completed");
-    }
-
-    public static void deleteRoles(String rid) throws SQLException{
-        String query = "DELETE FROM roles WHERE roleid = ?";
-        PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, rid);
-        stmt.executeUpdate();
-        System.out.println("DELETE successfully completed");
-    }
 }
