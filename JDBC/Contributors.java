@@ -22,7 +22,7 @@ public class Contributors {
     }
 
     public String getName() {
-        return name;
+        return fullname;
     }
 
 }

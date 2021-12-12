@@ -17,7 +17,8 @@ public class JDBCUnitTests {
     }
     @Test
     void testComponents() {
-        Components components = new Components("thisid", "A12345", 52, 23, "3242", 2, 5);
+        List<Song> songs = new ArrayList<>();
+        Components components = new Components("thisid", "A12345", 52, 23, "3242", 2, 5, songs);
         assertEquals("thisid", components.getComponentId());
         assertEquals("A12345", components.getSongId());
         assertEquals(52, components.getOffsetComponent());
@@ -35,7 +36,8 @@ public class JDBCUnitTests {
     @Test
     void testDistribution() {
         Date thisdate = new Date(0);
-        Distribution distribution = new Distribution("B12345", "Z2234", thisdate, "M123", "Never Gonna Give You Up");
+        List<Song> songs = new ArrayList<>();
+        Distribution distribution = new Distribution("B12345", "Z2234","M123", thisdate, "Never Gonna Give You Up", songs);
         assertEquals("B12345", distribution.getSongId());
         assertEquals("Z2234", distribution.getRecordLabelId());
         assertEquals(thisdate, distribution.getReleaseDate());
@@ -44,13 +46,15 @@ public class JDBCUnitTests {
     }
     @Test
     void testMarkets() {
-        Markets markets = new Markets("M2345", "Michigan");
+        List<Distribution> distributions = new ArrayList<>();
+        Markets markets = new Markets("M2345", "Michigan", distributions);
         assertEquals("M2345", markets.getMarketId());
         assertEquals("Michigan", markets.getArea());
     }
     @Test
     void testRecordLabel() {
-        RecordLabel recordlabel = new RecordLabel("R123", "Sony Music");
+        List<Distribution> distributions = new ArrayList<>();
+        RecordLabel recordlabel = new RecordLabel("R123", "Sony Music", distributions);
         assertEquals("R123", recordlabel.getRecordLabelId());
         assertEquals("Sony Music", recordlabel.getName());
     }
@@ -65,7 +69,8 @@ public class JDBCUnitTests {
         List<Contributors> contributors = new ArrayList<Contributors>();
         List<Roles> roles = new ArrayList<Roles>();
         List<Components> components = new ArrayList<Components>();
-        Song song = new Song("S123", 100, contributors, roles, components);
+        Date thisdate = new Date(0);
+        Song song = new Song("S123", thisdate, 100, contributors, roles, components);
         assertEquals("S123", song.getSongId());
         assertEquals(100, song.getDuration());
         assertEquals(contributors, song.getContributors());
