@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-
 public class Application {
     
     static Connection con;
@@ -27,14 +26,13 @@ public class Application {
 
         Console console = System.console();
         String password = new String(console.readPassword("Enter Password: "));
-        getConnection(username = "A2032367", password ="SQL2021");
+        getConnection(username,password);
 
         System.out.println("Type the number of the choice");
         
         System.out.println("1 -- UPDATE a table");
         System.out.println("2 -- INSERT a table");
         System.out.println("3 -- DELETE a table");
-        System.out.println("4 -- Prepared statements");
 
         String choice = s.nextLine();
         if(choice.equals("1") || choice.equals("2") || choice.equals("3")){
@@ -156,15 +154,15 @@ public class Application {
                     deleteSongs(sID);
                     updateAuditLog("Deleting from Song table");
                 }
+            } else if(table.equals("8")){
+                System.out.println(" --- ROLESCONSONG --- ");
+                initSong();
+                if(choice.equals("2")){
+                    insertRolesConSong();
+                    updateAuditLog("Inserting into Song table");
+                } 
             } 
-        } else if(choice.equals("4")){
-            System.out.println(" --- PREPARED STATMENTS --- ");
-            System.out.println("1 -- search contributors and roles to a song");
-            System.out.println("2 -- get a breakdown of a compilation");
-            System.out.println("3 -- update fields of a song");
-            System.out.println("4 -- search contributions and roles that an artist has had");
-            System.out.println("5 -- show roles of an artist");
-        }
+        } 
     }
 
     public static void getConnection(String username, String password) throws SQLException{
@@ -179,7 +177,7 @@ public class Application {
     public static void updateAuditLog(String info) throws SQLException{
         Date date = new Date(System.currentTimeMillis());
         
-        String query = "INSERT INTO AUDITLOG(changeid,username, information, dateinfo) VALUES(auditlogSeq.nextVal,?,?,?)";
+        String query = "INSERT INTO AUDITLOG(auditid, username, information, dateinfo) VALUES('A' || auditSeq.nextval, ?,?,?)";
         PreparedStatement stmt = con.prepareStatement(query);
         stmt.setString(1, username);
         stmt.setString(2, info);
@@ -459,7 +457,7 @@ public class Application {
             i++;
             String marketId = rs.getString("marketid");
             String area = rs.getString("area");
-            Markets m = new Markets(marketId, area, getDistributionsMarket(marketId));
+            Markets m = new Markets(marketId, area, getDistributionsMarket(rs.getString("marketid")));
             System.out.println(i+" -- "+m);
         }
         rs.close();
@@ -513,24 +511,6 @@ public class Application {
         stmt.close();
     }
 
-
-    public static void getConRoles(String song) throws SQLException{
-        String query = "SELECT fullname,rolename FROM contributors"
-        +" JOIN rolesconsong  rcs USING(contributorid)"
-        +" JOIN roles USING(roleid)"
-        +" JOIN song USING(songid)"
-        +" JOIN distribution USING(songid)"
-        +" WHERE songtitle LIKE ? ";
-        PreparedStatement stmt = con.prepareStatement(query);
-        stmt.setString(1, song);
-        ResultSet rs = stmt.executeQuery();
-        //List<String> results = new ArrayList<String>();
-        while(rs.next()){
-            System.out.println("name: "+rs.getString("fullname") + "|| role: "+ rs.getString("rolname") );
-        }
-
-    }
-
     public static void showTables(){
         System.out.println(" --- TABLES --- ");
         System.out.println("1 -- COMPONENTS");
@@ -540,6 +520,7 @@ public class Application {
         System.out.println("5 -- RECORDLABEL");
         System.out.println("6 -- ROLES");
         System.out.println("7 -- SONG");
+        System.out.println("8 -- ROLESCONSONG");
         System.out.println(" --- SELECT WHICH TABLE TO MODIFY BY TYPING THE NUMBER --- ");
 
 
@@ -673,6 +654,26 @@ public class Application {
         stmt.close();
     }
 
+    public static void insertRolesConSong() throws SQLException, ParseException{
+        String query = "INSERT INTO rolesconsong(songid, contributorid, marketid) VALUES(? ,?, ?)";
+        PreparedStatement stmt = con.prepareStatement(query);
+        
+        Scanner s = new Scanner(System.in);
+        System.out.println("ENTER Song ID:");
+        String sid = s.nextLine();
+        System.out.println("ENTER Contributor ID:");
+        String cid = s.nextLine();
+        System.out.println("ENTER Market ID:");
+        String mid = s.nextLine();
+          
+        stmt.setString(1, sid);
+        stmt.setString(2, cid);
+        stmt.setString(3, mid);
+        stmt.executeUpdate();
+        System.out.println("INSERT successfully completed");
+        stmt.close();
+    }
+
     public static void deleteComponent(String comId) throws SQLException{
         String query = "SELECT * FROM components WHERE componentid = ?";
         PreparedStatement stmt = con.prepareStatement(query);
@@ -746,8 +747,8 @@ public class Application {
         rs.next();
         String marketid = rs.getString("marketid");
         String area = rs.getString("area");
-        Markets m = new Markets(marketid, area, getDistributionsMarket(marketid));
-        System.out.println(1+" -- "+m);
+        Markets market = new Markets(marketid, area, getDistributionsMarket(mID));
+        System.out.println(1+" -- "+market);
         stmt.close();
         
         String q2 = "DELETE FROM markets WHERE marketid = ?";
