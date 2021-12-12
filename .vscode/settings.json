@@ -1,6 +1,6 @@
 {
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "c:\\Users\\Matteo\\Documents\\Database 2\\ojdbc8.jar"
-    ]
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "c:\\Users\\ThatL\\Documents\\ojdbc8.jar"
+  ]
 }
