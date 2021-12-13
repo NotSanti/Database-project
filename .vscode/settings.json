@@ -2,6 +2,7 @@
   "java.project.referencedLibraries": [
     "lib/**/*.jar",
     "c:\\Users\\ThatL\\Documents\\ojdbc8.jar",
-    "JDBC\\junit-platform-console-standalone-1.8.2.jar"
+    "JDBC\\junit-platform-console-standalone-1.8.2.jar",
+    "ojdbc8.jar"
   ]
 }

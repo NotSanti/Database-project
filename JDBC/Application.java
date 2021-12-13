@@ -34,10 +34,10 @@ public class Application {
         boolean connected = true;
         while(connected){
             System.out.println("Type the number of the choice");
-        System.out.println("1 -- UPDATE a table");
-        System.out.println("2 -- INSERT a table");
-        System.out.println("3 -- DELETE a table");
-        System.out.println("4 -- QUIT");
+            System.out.println("1 -- UPDATE a table");
+            System.out.println("2 -- INSERT a table");
+            System.out.println("3 -- DELETE a table");
+            System.out.println("4 -- QUIT");
 
         String choice = s.nextLine();
         if(choice.equals("1") || choice.equals("2") || choice.equals("3")){
@@ -183,7 +183,7 @@ public class Application {
      * @throws SQLException
      */
     public static void getConnection(String username, String password) throws SQLException{
-        System.out.println("connecting");
+        System.out.println("Connecting...");
         con = DriverManager.getConnection("jdbc:oracle:thin:@pdbora19c.dawsoncollege.qc.ca:1521/pdbora19c.dawsoncollege.qc.ca", username, password);
        
         if(con.isValid(1000)){
@@ -199,11 +199,11 @@ public class Application {
     public static void updateAuditLog(String info) throws SQLException{
         Date date = new Date(System.currentTimeMillis());
         
-        String query = "INSERT INTO AUDITLOG(auditid, username, information, dateinfo) VALUES('A' || auditSeq.nextval, ?,?,?)";
+        String query = "INSERT INTO AUDITLOG(auditid, username, dateinfo, information) VALUES('A' || auditSeq.nextval, ?,?,?)";
         PreparedStatement stmt = con.prepareStatement(query);
         stmt.setString(1, username);
-        stmt.setString(2, info);
-        stmt.setDate(3, date);
+        stmt.setDate(2, date);
+        stmt.setString(3, info);
         stmt.executeUpdate();
         System.out.println("UPDATE successfully completed");
     }
@@ -458,7 +458,6 @@ public class Application {
         String query = "SELECT * FROM components";
         PreparedStatement stmt = con.prepareStatement(query);
         ResultSet rs = stmt.executeQuery();
-        //List<Components> comp = new ArrayList<>();
         int i=0;
         while(rs.next()){
             i++;
@@ -470,11 +469,9 @@ public class Application {
             int offsetSong = rs.getInt("offsetsong");
             int durationSong = rs.getInt("durationsong");
             Components components = new Components(componentId, songId, offsetComponent, durationComponent, songUsed, offsetSong, durationSong, getSongsComponent(rs.getString("componentid")));
-            //comp.add(components);
             System.out.println(i+" -- "+components);
         }
         stmt.close();
-        //return comp;
     }
 
     /**
